@@ -1,4 +1,5 @@
 import 'package:admin/constants.dart';
+import 'package:admin/util.dart';
 import 'package:flutter/material.dart';
 
 class InputsInfoModal extends StatefulWidget {
@@ -10,11 +11,21 @@ class InputsInfoModal extends StatefulWidget {
 
 class _InputsInfoModalState extends State<InputsInfoModal> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     bool initialValueSwitch = false;
     ScrollController scrollController = ScrollController();
-    int? _groupValue = 1;
+    String _typeDropdownValue = "";
     int? value = 1;
+
+    bool _isChecked = true;
+    String _currText = '';
+
+    List<String> text = ["InduceSmile.com", "Flutter.io", "google.com"];
 
     Size screenSize = MediaQuery.of(context).size;
 
@@ -171,6 +182,65 @@ class _InputsInfoModalState extends State<InputsInfoModal> {
                                   });
                                 },
                                 title: Text("Option 3"),
+                              )
+                            ]),
+                            Column(children: [
+                              const Text(
+                                'This is a Select input',
+                                style: TextStyle(fontSize: 14),
+                              ),
+                              DropdownButton<String>(
+                                value: _typeDropdownValue,
+                                style: const TextStyle(color: primaryColor),
+                                dropdownColor: Colors.white,
+                                underline: Container(
+                                  height: 2,
+                                  color: Colors.white,
+                                ),
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    _typeDropdownValue = newValue!;
+                                  });
+                                },
+                                items: Util.getInputDropdownMenu(),
+                              )
+                            ]),
+                            Column(children: [
+                              const Text(
+                                'This is a Checkbox input',
+                                style: TextStyle(fontSize: 14),
+                              ),
+                              Text(_currText,
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                              CheckboxListTile(
+                                title: Text("Option 1"),
+                                value: _isChecked,
+                                onChanged: (val) {
+                                  setState(() {
+                                    _isChecked = val!;
+                                  });
+                                },
+                              ),
+                              CheckboxListTile(
+                                title: Text("Option 2"),
+                                value: _isChecked,
+                                onChanged: (val) {
+                                  setState(() {
+                                    _isChecked = val!;
+                                  });
+                                },
+                              ),
+                              CheckboxListTile(
+                                title: Text("Option 3"),
+                                value: false,
+                                onChanged: (val) {
+                                  setState(() {
+                                    _isChecked = val!;
+                                  });
+                                },
                               )
                             ]),
                             Row(
