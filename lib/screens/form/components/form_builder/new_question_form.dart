@@ -4,6 +4,8 @@ import 'package:admin/service/form_builder_service.dart';
 import 'package:admin/util.dart';
 import 'package:flutter/material.dart';
 
+import 'inputs_info_modal.dart';
+
 class NewQuestionForm extends StatefulWidget {
   const NewQuestionForm({Key? key}) : super(key: key);
 
@@ -139,6 +141,19 @@ class _NewQuestionFormState extends State<NewQuestionForm> {
                                   });
                                 },
                                 items: inputTypeDropDownItemList,
+                              ),
+                              IconButton(
+                                tooltip: "Help",
+                                color: Colors.red,
+                                icon: new Icon(Icons.info_sharp),
+                                highlightColor: Colors.redAccent,
+                                onPressed: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return const InputsInfoModal();
+                                      });
+                                },
                               )
                             ]),
                             builderService.getFormByInputType(
