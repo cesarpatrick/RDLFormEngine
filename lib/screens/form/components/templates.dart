@@ -1,4 +1,5 @@
 import 'package:admin/models/Template.dart';
+import 'package:admin/screens/main/components/header.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -21,12 +22,15 @@ class Templates extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Header(),
           Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, NEW_TEMPLATE_FORM);
+                  },
                   icon: Icon(Icons.add),
                   label: Text("Add New"),
                   style: TextButton.styleFrom(

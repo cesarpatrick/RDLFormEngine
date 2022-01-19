@@ -41,17 +41,9 @@ class _InputsInfoModalState extends State<InputsInfoModal> {
                     Padding(
                         padding: const EdgeInsets.all(15),
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            const Padding(
-                              padding: EdgeInsets.all(15),
-                              child: Text(
-                                "Help",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                    color: Colors.white),
-                              ),
-                            ),
                             Column(children: <Widget>[
                               const SizedBox(
                                 width: 20,
@@ -92,17 +84,17 @@ class _InputsInfoModalState extends State<InputsInfoModal> {
                             Column(
                               children: [
                                 Align(
-                                    alignment: Alignment.centerLeft,
+                                    alignment: Alignment.center,
                                     child: Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.start,
+                                          MainAxisAlignment.center,
                                       children: <Widget>[
                                         const SizedBox(
                                           width: 20,
                                         ),
                                         SizedBox(
                                             height: 200,
-                                            width: screenSize.width / 1.6,
+                                            width: screenSize.width / 1.8,
                                             child: TextField(
                                               style: TextStyle(
                                                   color: Colors.white),
@@ -205,6 +197,7 @@ class _InputsInfoModalState extends State<InputsInfoModal> {
                                 items: Util.getInputDropdownMenu(),
                               )
                             ]),
+                            SizedBox(height: 20),
                             Column(children: [
                               const Text(
                                 'This is a Checkbox input',
@@ -218,6 +211,7 @@ class _InputsInfoModalState extends State<InputsInfoModal> {
                               CheckboxListTile(
                                 title: Text("Option 1"),
                                 value: _isChecked,
+                                checkColor: Colors.black,
                                 onChanged: (val) {
                                   setState(() {
                                     _isChecked = val!;
@@ -227,6 +221,7 @@ class _InputsInfoModalState extends State<InputsInfoModal> {
                               CheckboxListTile(
                                 title: Text("Option 2"),
                                 value: _isChecked,
+                                checkColor: Colors.black,
                                 onChanged: (val) {
                                   setState(() {
                                     _isChecked = val!;
@@ -235,6 +230,7 @@ class _InputsInfoModalState extends State<InputsInfoModal> {
                               ),
                               CheckboxListTile(
                                 title: Text("Option 3"),
+                                checkColor: Colors.black,
                                 value: false,
                                 onChanged: (val) {
                                   setState(() {
@@ -243,6 +239,7 @@ class _InputsInfoModalState extends State<InputsInfoModal> {
                                 },
                               )
                             ]),
+                            SizedBox(height: 40),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               mainAxisAlignment: MainAxisAlignment.end,

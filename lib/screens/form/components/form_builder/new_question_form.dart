@@ -20,8 +20,6 @@ class _NewQuestionFormState extends State<NewQuestionForm> {
 
   FormBuilderService builderService = FormBuilderService();
 
-  ScrollController scrollController = ScrollController();
-
   bool _validate = false;
 
   String _typeDropdownValue = "";
@@ -65,103 +63,101 @@ class _NewQuestionFormState extends State<NewQuestionForm> {
                 Padding(
                     padding: const EdgeInsets.all(15),
                     child: SingleChildScrollView(
-                        controller: scrollController,
                         child: Column(
-                          children: <Widget>[
-                            const Padding(
-                              padding: EdgeInsets.all(15),
-                              child: Text(
-                                "New Question",
-                                style: titleStyle,
+                      children: <Widget>[
+                        const Padding(
+                          padding: EdgeInsets.all(15),
+                          child: Text(
+                            "New Question",
+                            style: titleStyle,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: TextField(
+                            controller: nameController,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: primaryColor,
+                              border: const OutlineInputBorder(),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    const BorderSide(color: Colors.white),
                               ),
+                              hintText: 'Enter the name',
+                              errorText:
+                                  _validate ? 'Name Can\'t Be Empty' : null,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(15),
-                              child: TextField(
-                                controller: nameController,
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: primaryColor,
-                                  border: const OutlineInputBorder(),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        const BorderSide(color: Colors.white),
-                                  ),
-                                  hintText: 'Enter the name',
-                                  errorText:
-                                      _validate ? 'Name Can\'t Be Empty' : null,
-                                ),
-                              ),
+                          ),
+                        ),
+                        Row(children: <Widget>[
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          Text("Departament", style: textStyle),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          DropdownButton<String>(
+                            value: _departamentDropdownValue,
+                            style: const TextStyle(color: primaryColor),
+                            dropdownColor: Colors.white,
+                            underline: Container(
+                              height: 2,
+                              color: primaryColor,
                             ),
-                            Row(children: <Widget>[
-                              const SizedBox(
-                                width: 20,
-                              ),
-                              Text("Departament", style: textStyle),
-                              const SizedBox(
-                                width: 20,
-                              ),
-                              DropdownButton<String>(
-                                value: _departamentDropdownValue,
-                                style: const TextStyle(color: primaryColor),
-                                dropdownColor: Colors.white,
-                                underline: Container(
-                                  height: 2,
-                                  color: Colors.black,
-                                ),
-                                onChanged: (newValue) {
-                                  setState(() {
-                                    _validateForm();
-                                    _departamentDropdownValue = newValue!;
+                            onChanged: (newValue) {
+                              setState(() {
+                                _validateForm();
+                                _departamentDropdownValue = newValue!;
+                              });
+                            },
+                            items: departamentTypeDropDownItemList,
+                          )
+                        ]),
+                        Row(children: <Widget>[
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          Text("Input Type", style: textStyle),
+                          const SizedBox(
+                            width: 42,
+                          ),
+                          DropdownButton<String>(
+                            value: _typeDropdownValue,
+                            style: const TextStyle(color: primaryColor),
+                            dropdownColor: Colors.white,
+                            underline: Container(
+                              height: 2,
+                              color: primaryColor,
+                            ),
+                            onChanged: (newValue) {
+                              setState(() {
+                                _validateForm();
+                                _typeDropdownValue = newValue!;
+                              });
+                            },
+                            items: inputTypeDropDownItemList,
+                          ),
+                          IconButton(
+                            tooltip: "Help",
+                            color: Colors.red,
+                            icon: new Icon(Icons.info_sharp),
+                            highlightColor: Colors.redAccent,
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return const InputsInfoModal();
                                   });
-                                },
-                                items: departamentTypeDropDownItemList,
-                              )
-                            ]),
-                            Row(children: <Widget>[
-                              const SizedBox(
-                                width: 20,
-                              ),
-                              Text("Input Type", style: textStyle),
-                              const SizedBox(
-                                width: 42,
-                              ),
-                              DropdownButton<String>(
-                                value: _typeDropdownValue,
-                                style: const TextStyle(color: primaryColor),
-                                dropdownColor: Colors.white,
-                                underline: Container(
-                                  height: 2,
-                                  color: Colors.black,
-                                ),
-                                onChanged: (newValue) {
-                                  setState(() {
-                                    _validateForm();
-                                    _typeDropdownValue = newValue!;
-                                  });
-                                },
-                                items: inputTypeDropDownItemList,
-                              ),
-                              IconButton(
-                                tooltip: "Help",
-                                color: Colors.red,
-                                icon: new Icon(Icons.info_sharp),
-                                highlightColor: Colors.redAccent,
-                                onPressed: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return const InputsInfoModal();
-                                      });
-                                },
-                              )
-                            ]),
-                            builderService.getFormByInputType(
-                                nameController.text,
-                                _typeDropdownValue,
-                                _departamentDropdownValue),
-                          ],
-                        )))
+                            },
+                          )
+                        ]),
+                        horizontalDivider,
+                        builderService.getFormByInputType(nameController.text,
+                            _typeDropdownValue, _departamentDropdownValue)
+                      ],
+                    )))
               ],
             )));
   }

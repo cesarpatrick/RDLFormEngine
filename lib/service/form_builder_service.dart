@@ -8,6 +8,7 @@ import 'package:admin/screens/form/components/form_builder/select_input_form.dar
 import 'package:admin/screens/form/components/form_builder/switch_input_form.dart';
 import 'package:admin/screens/form/components/form_builder/text_area_input_form.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../constants.dart';
 
@@ -29,6 +30,37 @@ class FormBuilderService {
       default:
         return Container();
     }
+  }
+
+  Widget inputPreview(Question question) {
+    TextEditingController labelController = TextEditingController();
+    labelController.text = question.field.value;
+
+    return Padding(
+        padding: EdgeInsets.all(15),
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 40),
+              Text(question.field.label,
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold)),
+              SizedBox(height: 10),
+              TextField(
+                  style: TextStyle(color: Colors.black),
+                  controller: labelController,
+                  decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      enabledBorder: const OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.black)),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.black),
+                      )))
+            ]));
   }
 
   String convertQuestionToJson(Question question) {

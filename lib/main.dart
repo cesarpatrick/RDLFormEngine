@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import 'screens/form/components/questions.dart';
+import 'screens/form/components/template_builder/new_template_form.dart';
 import 'screens/form/components/templates.dart';
 import 'screens/main/page_not_found_screen.dart';
 
@@ -72,6 +73,15 @@ class MyApp extends StatelessWidget {
                   ],
                   child: Container(
                     child: MainScreen(widget: NewQuestionForm()),
+                  )),
+          NEW_TEMPLATE_FORM: (context) => MultiProvider(
+                  providers: [
+                    ChangeNotifierProvider(
+                      create: (context) => MenuController(),
+                    ),
+                  ],
+                  child: Container(
+                    child: MainScreen(widget: NewTemplateForm()),
                   ))
         });
   }
