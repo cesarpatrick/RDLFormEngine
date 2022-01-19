@@ -89,7 +89,7 @@ class _InputFormState extends State<InputForm> {
                 Switch(
                   activeColor: Colors.green,
                   value: initialValueSwitch,
-                  inactiveTrackColor: Colors.redAccent,
+                  inactiveTrackColor: Colors.grey,
                   onChanged: (value) {
                     setState(() {
                       initialValueSwitch = value;
@@ -140,7 +140,7 @@ class _InputFormState extends State<InputForm> {
                 ),
               ),
               horizontalDivider,
-              PreviewForm(question: this.question),
+              PreviewForm(question: this.question, inputType: INPUT_TEXT),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[

@@ -1,2 +1,7 @@
-2022/01/19-13:21:00.792 1fcc Creating DB /tmp/flutter_tools.OBOCNF/flutter_tools_chrome_device.CQXSWL/Default/IndexedDB/https_www.youtube.com_0.indexeddb.leveldb since it was missing.
-2022/01/19-13:21:00.802 1fcc Reusing MANIFEST /tmp/flutter_tools.OBOCNF/flutter_tools_chrome_device.CQXSWL/Default/IndexedDB/https_www.youtube.com_0.indexeddb.leveldb/MANIFEST-000001
+2022/01/19-14:47:46.905 4cd4 Reusing MANIFEST /tmp/flutter_tools.OBOCNF/flutter_tools_chrome_device.CQXSWL/Default/IndexedDB/https_www.youtube.com_0.indexeddb.leveldb/MANIFEST-000001
+2022/01/19-14:47:46.905 4cd4 Recovering log #3
+2022/01/19-14:47:46.906 4cd4 Reusing old log /tmp/flutter_tools.OBOCNF/flutter_tools_chrome_device.CQXSWL/Default/IndexedDB/https_www.youtube.com_0.indexeddb.leveldb/000003.log 
+2022/01/19-14:49:22.832 4ccc Level-0 table #5: started
+2022/01/19-14:49:22.837 4ccc Level-0 table #5: 102731 bytes OK
+2022/01/19-14:49:22.843 4ccc Delete type=0 #3
+2022/01/19-14:49:22.843 4ccc Manual compaction at level-0 from (begin) .. (end); will stop at (end)

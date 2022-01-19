@@ -2,6 +2,8 @@ import 'package:admin/constants.dart';
 import 'package:admin/models/Question.dart';
 import 'package:flutter/material.dart';
 
+import 'preview_form.dart';
+
 class SwitchInputForm extends StatefulWidget {
   final String name;
   final String? departament;
@@ -13,6 +15,14 @@ class SwitchInputForm extends StatefulWidget {
 }
 
 class _SwitchInputFormState extends State<SwitchInputForm> {
+  Question question = Question(
+      field: Field(
+        key: "",
+        label: "",
+        type: "Switch",
+        value: false,
+      ),
+      name: "");
   bool initialValueRequiredSwitch = false;
   bool initialValueSelectedSwitch = false;
   TextEditingController labelController = TextEditingController();
@@ -34,19 +44,20 @@ class _SwitchInputFormState extends State<SwitchInputForm> {
     super.dispose();
   }
 
-  Question _save(String label, String initialValue, bool required) {
+  void _updateQuestion() {
     Field field = Field(
         key: "key",
         type: "Switch",
-        label: label,
-        value: initialValue,
-        required: required);
+        label: labelController.text,
+        value: initialValueSelectedSwitch.toString(),
+        required: initialValueRequiredSwitch);
 
     Question question = Question(
         field: field, name: widget.name, departament: widget.departament);
 
     print(question.toJson());
-    return question;
+
+    this.question = question;
   }
 
   @override
@@ -77,10 +88,11 @@ class _SwitchInputFormState extends State<SwitchInputForm> {
                 Switch(
                   activeColor: Colors.green,
                   value: initialValueRequiredSwitch,
-                  inactiveTrackColor: Colors.redAccent,
+                  inactiveTrackColor: Colors.grey,
                   onChanged: (value) {
                     setState(() {
                       initialValueRequiredSwitch = value;
+                      _updateQuestion();
                     });
                   },
                 )
@@ -89,7 +101,9 @@ class _SwitchInputFormState extends State<SwitchInputForm> {
                 padding: const EdgeInsets.all(15),
                 child: TextField(
                   onChanged: (value) {
-                    setState(() {});
+                    setState(() {
+                      _updateQuestion();
+                    });
                   },
                   controller: labelController,
                   decoration: InputDecoration(
@@ -115,14 +129,17 @@ class _SwitchInputFormState extends State<SwitchInputForm> {
                 Switch(
                   activeColor: Colors.green,
                   value: initialValueSelectedSwitch,
-                  inactiveTrackColor: Colors.redAccent,
+                  inactiveTrackColor: Colors.grey,
                   onChanged: (value) {
                     setState(() {
                       initialValueSelectedSwitch = value;
+                      _updateQuestion();
                     });
                   },
                 )
               ]),
+              horizontalDivider,
+              PreviewForm(question: this.question, inputType: SWITCH),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -138,12 +155,7 @@ class _SwitchInputFormState extends State<SwitchInputForm> {
                                 ? _validate = true
                                 : _validate = false;
 
-                            if (_validate == false) {
-                              Navigator.of(context).pop(_save(
-                                  labelController.text,
-                                  initialValueController.text,
-                                  initialValueRequiredSwitch));
-                            }
+                            if (_validate == false) {}
                           })
                         },
                         style: ButtonStyle(

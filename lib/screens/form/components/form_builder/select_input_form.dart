@@ -2,6 +2,8 @@ import 'package:admin/constants.dart';
 import 'package:admin/models/Question.dart';
 import 'package:flutter/material.dart';
 
+import 'preview_form.dart';
+
 class SelectInputForm extends StatefulWidget {
   final String name;
   final String? departament;
@@ -27,6 +29,15 @@ class _SelectInputFormState extends State<SelectInputForm> {
   bool _validateItemLabel = false;
   bool _validateItemValue = false;
 
+  Question question = Question(
+      field: Field(
+        key: "",
+        label: "",
+        type: "Input",
+        value: "",
+      ),
+      name: "");
+
   dynamic response;
 
   @override
@@ -43,32 +54,37 @@ class _SelectInputFormState extends State<SelectInputForm> {
     super.dispose();
   }
 
-  Question _save(
-      String label, String initialValue, bool required, List<Item> items) {
+  void _updateQuestion() {
     Field field = Field(
         key: "key",
         type: "Select",
-        label: label,
-        value: initialValue,
-        required: required,
+        label: labelController.text,
+        value: initialValueController.text,
+        required: initialValueRequiredSwitch,
         items: items);
 
     Question question = Question(
         field: field, name: widget.name, departament: widget.departament);
 
     print(question.toJson());
-    return question;
+
+    this.question = question;
   }
 
   void _undoField() {
     items.removeLast();
-    setState(() {});
+    setState(() {
+      _updateQuestion();
+    });
   }
 
   void _addOption(String label, dynamic value) {
     items.add(Item(label: label, value: value));
     labelItemController.text = "";
     valueItemController.text = "";
+    setState(() {
+      _updateQuestion();
+    });
   }
 
   @override
@@ -98,7 +114,7 @@ class _SelectInputFormState extends State<SelectInputForm> {
                   Switch(
                     activeColor: Colors.green,
                     value: initialValueRequiredSwitch,
-                    inactiveTrackColor: Colors.redAccent,
+                    inactiveTrackColor: Colors.grey,
                     onChanged: (value) {
                       setState(() {
                         initialValueRequiredSwitch = value;
@@ -110,6 +126,11 @@ class _SelectInputFormState extends State<SelectInputForm> {
                   padding: const EdgeInsets.all(15),
                   child: TextField(
                     controller: labelController,
+                    onChanged: (value) {
+                      setState(() {
+                        _updateQuestion();
+                      });
+                    },
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: primaryColor,
@@ -127,6 +148,11 @@ class _SelectInputFormState extends State<SelectInputForm> {
                   padding: const EdgeInsets.all(15),
                   child: TextField(
                     controller: initialValueController,
+                    onChanged: (value) {
+                      setState(() {
+                        _updateQuestion();
+                      });
+                    },
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: primaryColor,
@@ -204,7 +230,7 @@ class _SelectInputFormState extends State<SelectInputForm> {
                         },
                         style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.green),
+                              MaterialStateProperty.all<Color>(primaryColor),
                         ),
                         child: RichText(
                           text: const TextSpan(
@@ -263,6 +289,9 @@ class _SelectInputFormState extends State<SelectInputForm> {
                               )
                               .toList())
                     ]),
+                SizedBox(height: 20),
+                horizontalDivider,
+                PreviewForm(question: this.question, inputType: SELECT_INPUT),
                 const SizedBox(height: 50),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -276,17 +305,13 @@ class _SelectInputFormState extends State<SelectInputForm> {
                               : _validateLabel = false;
 
                           if (_validateLabel == false) {
-                            Navigator.of(context).pop(_save(
-                                labelController.text,
-                                initialValueController.text,
-                                initialValueRequiredSwitch,
-                                items));
+                            Navigator.of(context).pop();
                           }
                         })
                       },
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.green),
+                            MaterialStateProperty.all<Color>(primaryColor),
                       ),
                       child: RichText(
                         text: const TextSpan(

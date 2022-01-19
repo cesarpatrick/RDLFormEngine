@@ -2,6 +2,8 @@ import 'package:admin/constants.dart';
 import 'package:admin/models/Question.dart';
 import 'package:flutter/material.dart';
 
+import 'preview_form.dart';
+
 class TextAreaInputForm extends StatefulWidget {
   final String name;
   final String? departament;
@@ -13,6 +15,15 @@ class TextAreaInputForm extends StatefulWidget {
 }
 
 class _TextAreaInputFormState extends State<TextAreaInputForm> {
+  Question question = Question(
+      field: Field(
+        key: "",
+        label: "",
+        type: "Input",
+        value: "",
+      ),
+      name: "");
+
   bool initialValueSwitch = false;
   TextEditingController labelController = TextEditingController();
   TextEditingController initialValueController = TextEditingController();
@@ -33,19 +44,20 @@ class _TextAreaInputFormState extends State<TextAreaInputForm> {
     super.dispose();
   }
 
-  Question _save(String label, String initialValue, bool required) {
+  void _updateQuestion() {
     Field field = Field(
         key: "key",
         type: "Input",
-        label: label,
-        value: initialValue,
-        required: required);
+        label: labelController.text,
+        value: initialValueController.text,
+        required: initialValueSwitch);
 
     Question question = Question(
         field: field, name: widget.name, departament: widget.departament);
 
     print(question.toJson());
-    return question;
+
+    this.question = question;
   }
 
   @override
@@ -74,7 +86,7 @@ class _TextAreaInputFormState extends State<TextAreaInputForm> {
                 Switch(
                   activeColor: Colors.green,
                   value: initialValueSwitch,
-                  inactiveTrackColor: Colors.redAccent,
+                  inactiveTrackColor: Colors.grey,
                   onChanged: (value) {
                     setState(() {
                       initialValueSwitch = value;
@@ -86,7 +98,9 @@ class _TextAreaInputFormState extends State<TextAreaInputForm> {
                 padding: const EdgeInsets.all(15),
                 child: TextField(
                   onChanged: (value) {
-                    setState(() {});
+                    setState(() {
+                      _updateQuestion();
+                    });
                   },
                   controller: labelController,
                   decoration: InputDecoration(
@@ -105,6 +119,11 @@ class _TextAreaInputFormState extends State<TextAreaInputForm> {
                 padding: const EdgeInsets.all(15),
                 child: TextField(
                   controller: initialValueController,
+                  onChanged: (value) {
+                    setState(() {
+                      _updateQuestion();
+                    });
+                  },
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: primaryColor,
@@ -116,6 +135,8 @@ class _TextAreaInputFormState extends State<TextAreaInputForm> {
                   ),
                 ),
               ),
+              horizontalDivider,
+              PreviewForm(question: this.question, inputType: TEXT_AREA_INPUT),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -131,17 +152,12 @@ class _TextAreaInputFormState extends State<TextAreaInputForm> {
                                 ? _validate = true
                                 : _validate = false;
 
-                            if (_validate == false) {
-                              Navigator.of(context).pop(_save(
-                                  labelController.text,
-                                  initialValueController.text,
-                                  initialValueSwitch));
-                            }
+                            if (_validate == false) {}
                           })
                         },
                         style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.green),
+                              MaterialStateProperty.all<Color>(primaryColor),
                         ),
                         child: RichText(
                           text: const TextSpan(

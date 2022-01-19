@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 
 class PreviewForm extends StatefulWidget {
   final Question question;
-  const PreviewForm({Key? key, required this.question}) : super(key: key);
+  final String inputType;
+  const PreviewForm({Key? key, required this.question, required this.inputType})
+      : super(key: key);
 
   @override
   _PreviewFormState createState() => _PreviewFormState();
@@ -29,14 +31,20 @@ class _PreviewFormState extends State<PreviewForm> {
           ),
         ),
         Container(
-          width: screenSize.width / 2,
-          height: screenSize.height / 4,
-          padding: const EdgeInsets.all(3.0),
-          decoration: BoxDecoration(
-              border: Border.all(color: primaryColor, width: 3),
-              color: Colors.white),
-          child: Center(child: formService.inputPreview(widget.question)),
-        )
+            width: screenSize.width / 2,
+            height: screenSize.height / 4,
+            padding: const EdgeInsets.all(3.0),
+            decoration: BoxDecoration(
+                border: Border.all(color: primaryColor, width: 3),
+                color: Colors.white),
+            child: Theme(
+              data: Theme.of(context).copyWith(
+                  unselectedWidgetColor: Colors.grey,
+                  disabledColor: Colors.blue),
+              child: Center(
+                  child: formService.getFormPreviewByInputType(
+                      widget.question, widget.inputType)),
+            ))
       ],
     ));
   }

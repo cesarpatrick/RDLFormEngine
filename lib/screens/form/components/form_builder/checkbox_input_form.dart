@@ -2,6 +2,8 @@ import 'package:admin/constants.dart';
 import 'package:admin/models/Question.dart';
 import 'package:flutter/material.dart';
 
+import 'preview_form.dart';
+
 class CheckboxInputForm extends StatefulWidget {
   final String name;
   final String? departament;
@@ -13,6 +15,15 @@ class CheckboxInputForm extends StatefulWidget {
 }
 
 class _CheckboxInputFormState extends State<CheckboxInputForm> {
+  Question question = Question(
+      field: Field(
+        key: "",
+        label: "",
+        type: "Checkbox",
+        value: "",
+      ),
+      name: "");
+
   bool initialValueRequiredSwitch = false;
   bool initialValueOptionSwitch = false;
 
@@ -42,31 +53,36 @@ class _CheckboxInputFormState extends State<CheckboxInputForm> {
     super.dispose();
   }
 
-  Question _save(
-      String label, String initialValue, bool required, List<Item> items) {
+  void _updateQuestion() {
     Field field = Field(
         key: "key",
         type: "Checkbox",
-        label: label,
-        value: initialValue,
-        required: required,
+        label: labelController.text,
+        value: initialValueController.text,
+        required: initialValueRequiredSwitch,
         items: items);
 
     Question question = Question(
         field: field, name: widget.name, departament: widget.departament);
 
     print(question.toJson());
-    return question;
+
+    this.question = question;
+
+    setState(() {});
   }
 
   void _undoField() {
     items.removeLast();
-    setState(() {});
+    setState(() {
+      _updateQuestion();
+    });
   }
 
   void _addOption(String label, dynamic value) {
     items.add(Item(label: label, value: value));
     labelItemController.text = "";
+    _updateQuestion();
   }
 
   @override
@@ -96,7 +112,7 @@ class _CheckboxInputFormState extends State<CheckboxInputForm> {
                   Switch(
                     activeColor: Colors.green,
                     value: initialValueRequiredSwitch,
-                    inactiveTrackColor: Colors.redAccent,
+                    inactiveTrackColor: Colors.grey,
                     onChanged: (value) {
                       setState(() {
                         initialValueRequiredSwitch = value;
@@ -108,6 +124,9 @@ class _CheckboxInputFormState extends State<CheckboxInputForm> {
                   padding: const EdgeInsets.all(15),
                   child: TextField(
                     controller: labelController,
+                    onChanged: (value) {
+                      _updateQuestion();
+                    },
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: primaryColor,
@@ -149,7 +168,7 @@ class _CheckboxInputFormState extends State<CheckboxInputForm> {
                   Switch(
                     activeColor: Colors.green,
                     value: initialValueOptionSwitch,
-                    inactiveTrackColor: Colors.redAccent,
+                    inactiveTrackColor: Colors.grey,
                     onChanged: (value) {
                       setState(() {
                         initialValueOptionSwitch = value;
@@ -178,7 +197,7 @@ class _CheckboxInputFormState extends State<CheckboxInputForm> {
                         },
                         style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.green),
+                              MaterialStateProperty.all<Color>(primaryColor),
                         ),
                         child: RichText(
                           text: const TextSpan(
@@ -238,6 +257,8 @@ class _CheckboxInputFormState extends State<CheckboxInputForm> {
                               .toList())
                     ]),
                 const SizedBox(height: 50),
+                horizontalDivider,
+                PreviewForm(question: this.question, inputType: CHECKBOX_INPUT),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -249,18 +270,12 @@ class _CheckboxInputFormState extends State<CheckboxInputForm> {
                               ? _validateLabel = true
                               : _validateLabel = false;
 
-                          if (_validateLabel == false) {
-                            Navigator.of(context).pop(_save(
-                                labelController.text,
-                                initialValueController.text,
-                                initialValueRequiredSwitch,
-                                items));
-                          }
+                          if (_validateLabel == false) {}
                         })
                       },
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.green),
+                            MaterialStateProperty.all<Color>(primaryColor),
                       ),
                       child: RichText(
                         text: const TextSpan(

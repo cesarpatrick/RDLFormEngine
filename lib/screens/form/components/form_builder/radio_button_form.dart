@@ -2,6 +2,8 @@ import 'package:admin/constants.dart';
 import 'package:admin/models/Question.dart';
 import 'package:flutter/material.dart';
 
+import 'preview_form.dart';
+
 class RadioButtonForm extends StatefulWidget {
   final String name;
   final String? departament;
@@ -27,6 +29,15 @@ class _RadioButtonFormState extends State<RadioButtonForm> {
   bool _validateItemLabel = false;
   bool _validateItemValue = false;
 
+  Question question = Question(
+      field: Field(
+        key: "",
+        label: "",
+        type: "RadioButton",
+        value: "",
+      ),
+      name: "");
+
   dynamic response;
 
   @override
@@ -43,32 +54,38 @@ class _RadioButtonFormState extends State<RadioButtonForm> {
     super.dispose();
   }
 
-  Question _save(
-      String label, String initialValue, bool required, List<Item> items) {
+  void _updateQuestion() {
     Field field = Field(
         key: "key",
         type: "RadioButton",
-        label: label,
-        value: initialValue,
-        required: required,
+        label: labelController.text,
+        value: initialValueController.text,
+        required: initialValueRequiredSwitch,
         items: items);
 
     Question question = Question(
         field: field, name: widget.name, departament: widget.departament);
 
     print(question.toJson());
-    return question;
+
+    this.question = question;
+
+    setState(() {});
   }
 
   void _undoField() {
     items.removeLast();
-    setState(() {});
+    setState(() {
+      _updateQuestion();
+    });
   }
 
   void _addOption(String label, dynamic value) {
     items.add(Item(label: label, value: value));
     labelItemController.text = "";
     valueItemController.text = "";
+
+    _updateQuestion();
   }
 
   @override
@@ -98,7 +115,7 @@ class _RadioButtonFormState extends State<RadioButtonForm> {
                   Switch(
                     activeColor: Colors.green,
                     value: initialValueRequiredSwitch,
-                    inactiveTrackColor: Colors.redAccent,
+                    inactiveTrackColor: Colors.grey,
                     onChanged: (value) {
                       setState(() {
                         initialValueRequiredSwitch = value;
@@ -109,6 +126,9 @@ class _RadioButtonFormState extends State<RadioButtonForm> {
                 Padding(
                   padding: const EdgeInsets.all(15),
                   child: TextField(
+                    onChanged: (value) {
+                      _updateQuestion();
+                    },
                     controller: labelController,
                     decoration: InputDecoration(
                       filled: true,
@@ -126,6 +146,9 @@ class _RadioButtonFormState extends State<RadioButtonForm> {
                 Padding(
                   padding: const EdgeInsets.all(15),
                   child: TextField(
+                    onChanged: (value) {
+                      _updateQuestion();
+                    },
                     controller: initialValueController,
                     decoration: InputDecoration(
                       filled: true,
@@ -143,6 +166,9 @@ class _RadioButtonFormState extends State<RadioButtonForm> {
                 Padding(
                   padding: const EdgeInsets.all(15),
                   child: TextField(
+                    onChanged: (value) {
+                      _updateQuestion();
+                    },
                     controller: labelItemController,
                     decoration: InputDecoration(
                       filled: true,
@@ -161,6 +187,9 @@ class _RadioButtonFormState extends State<RadioButtonForm> {
                 Padding(
                   padding: const EdgeInsets.all(15),
                   child: TextField(
+                    onChanged: (value) {
+                      _updateQuestion();
+                    },
                     controller: valueItemController,
                     decoration: InputDecoration(
                       filled: true,
@@ -204,7 +233,7 @@ class _RadioButtonFormState extends State<RadioButtonForm> {
                         },
                         style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.green),
+                              MaterialStateProperty.all<Color>(primaryColor),
                         ),
                         child: RichText(
                           text: const TextSpan(
@@ -263,7 +292,11 @@ class _RadioButtonFormState extends State<RadioButtonForm> {
                               )
                               .toList())
                     ]),
-                const SizedBox(height: 50),
+                SizedBox(height: 20),
+                horizontalDivider,
+                PreviewForm(
+                    question: this.question, inputType: RADIO_BUTTON_INPUT),
+                SizedBox(height: 20),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -275,18 +308,12 @@ class _RadioButtonFormState extends State<RadioButtonForm> {
                               ? _validateLabel = true
                               : _validateLabel = false;
 
-                          if (_validateLabel == false) {
-                            Navigator.of(context).pop(_save(
-                                labelController.text,
-                                initialValueController.text,
-                                initialValueRequiredSwitch,
-                                items));
-                          }
+                          if (_validateLabel == false) {}
                         })
                       },
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.green),
+                            MaterialStateProperty.all<Color>(primaryColor),
                       ),
                       child: RichText(
                         text: const TextSpan(

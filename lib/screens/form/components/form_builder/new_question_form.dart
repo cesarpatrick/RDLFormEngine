@@ -99,6 +99,11 @@ class _NewQuestionFormState extends State<NewQuestionForm> {
                             width: 20,
                           ),
                           DropdownButton<String>(
+                            icon: Icon(
+                              // Add this
+                              Icons.arrow_drop_down, // Add this
+                              color: primaryColor, // Add this
+                            ),
                             value: _departamentDropdownValue,
                             style: const TextStyle(color: primaryColor),
                             dropdownColor: Colors.white,
@@ -124,6 +129,11 @@ class _NewQuestionFormState extends State<NewQuestionForm> {
                             width: 42,
                           ),
                           DropdownButton<String>(
+                            icon: Icon(
+                              // Add this
+                              Icons.arrow_drop_down, // Add this
+                              color: primaryColor, // Add this
+                            ),
                             value: _typeDropdownValue,
                             style: const TextStyle(color: primaryColor),
                             dropdownColor: Colors.white,
