@@ -2,7 +2,7 @@ import 'package:admin/constants.dart';
 import 'package:admin/models/Question.dart';
 import 'package:flutter/material.dart';
 
-import 'preview_form.dart';
+import 'question_preview_input.dart';
 
 class SwitchInputForm extends StatefulWidget {
   final String name;
@@ -16,7 +16,7 @@ class SwitchInputForm extends StatefulWidget {
 
 class _SwitchInputFormState extends State<SwitchInputForm> {
   Question question = Question(
-      field: Field(
+      field: QuestionField(
         key: "",
         label: "",
         type: "Switch",
@@ -45,7 +45,7 @@ class _SwitchInputFormState extends State<SwitchInputForm> {
   }
 
   void _updateQuestion() {
-    Field field = Field(
+    QuestionField field = QuestionField(
         key: "key",
         type: "Switch",
         label: labelController.text,
@@ -139,7 +139,7 @@ class _SwitchInputFormState extends State<SwitchInputForm> {
                 )
               ]),
               horizontalDivider,
-              PreviewForm(question: this.question, inputType: SWITCH),
+              QuestionPreviewInput(question: this.question, inputType: SWITCH),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -160,7 +160,7 @@ class _SwitchInputFormState extends State<SwitchInputForm> {
                         },
                         style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.green),
+                              MaterialStateProperty.all<Color>(primaryColor),
                         ),
                         child: RichText(
                           text: const TextSpan(

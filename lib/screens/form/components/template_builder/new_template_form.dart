@@ -1,9 +1,11 @@
 import 'package:admin/constants.dart';
-import 'package:admin/screens/form/components/form_builder/inputs_info_modal.dart';
 import 'package:admin/screens/main/components/header.dart';
 import 'package:admin/service/form_builder_service.dart';
 import 'package:admin/util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+
+import 'template_form_builder.dart';
 
 class NewTemplateForm extends StatefulWidget {
   const NewTemplateForm({Key? key}) : super(key: key);
@@ -23,9 +25,6 @@ class _NewTemplateFormState extends State<NewTemplateForm> {
 
   bool _validate = false;
 
-  String _typeDropdownValue = "";
-  String _departamentDropdownValue = "";
-
   @override
   void initState() {
     super.initState();
@@ -40,20 +39,8 @@ class _NewTemplateFormState extends State<NewTemplateForm> {
     super.dispose();
   }
 
-  _validateForm() {
-    if (nameController.text.isEmpty) {
-      setState(() => _validate = true);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    List<DropdownMenuItem<String>> inputTypeDropDownItemList =
-        Util.getInputDropdownMenu();
-
-    List<DropdownMenuItem<String>> departamentTypeDropDownItemList =
-        Util.getDepartamentsDropdownMenu();
-
     return Container(
         color: Colors.white,
         child: SingleChildScrollView(
@@ -63,62 +50,41 @@ class _NewTemplateFormState extends State<NewTemplateForm> {
                 Header(),
                 Padding(
                     padding: const EdgeInsets.all(15),
-                    child: SingleChildScrollView(
-                        controller: scrollController,
-                        child: Column(
-                          children: <Widget>[
-                            const Padding(
-                              padding: EdgeInsets.all(15),
-                              child: Text(
-                                "New Template",
-                                style: titleStyle,
+                    child: Column(
+                      children: <Widget>[
+                        const Padding(
+                          padding: EdgeInsets.all(15),
+                          child: Text(
+                            "New Template",
+                            style: titleStyle,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: TextField(
+                            controller: nameController,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: primaryColor,
+                              border: const OutlineInputBorder(),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    const BorderSide(color: Colors.white),
                               ),
+                              hintText: 'Enter the name',
+                              errorText:
+                                  _validate ? 'Name Can\'t Be Empty' : null,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(15),
-                              child: TextField(
-                                controller: nameController,
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: primaryColor,
-                                  border: const OutlineInputBorder(),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        const BorderSide(color: Colors.white),
-                                  ),
-                                  hintText: 'Enter the name',
-                                  errorText:
-                                      _validate ? 'Name Can\'t Be Empty' : null,
-                                ),
-                              ),
-                            ),
-                            Row(children: <Widget>[
-                              const SizedBox(
-                                width: 20,
-                              ),
-                              Text("Departament", style: textStyle),
-                              const SizedBox(
-                                width: 20,
-                              ),
-                              DropdownButton<String>(
-                                value: _departamentDropdownValue,
-                                style: const TextStyle(color: primaryColor),
-                                dropdownColor: Colors.white,
-                                underline: Container(
-                                  height: 2,
-                                  color: Colors.black,
-                                ),
-                                onChanged: (newValue) {
-                                  setState(() {
-                                    _validateForm();
-                                    _departamentDropdownValue = newValue!;
-                                  });
-                                },
-                                items: departamentTypeDropDownItemList,
-                              )
-                            ])
-                          ],
-                        )))
+                          ),
+                        ),
+                        horizontalDivider,
+                        Theme(
+                            data: Theme.of(context).copyWith(
+                                unselectedWidgetColor: Colors.black,
+                                disabledColor: Colors.black),
+                            child: TemplateFormBuilder())
+                      ],
+                    ))
               ],
             )));
   }

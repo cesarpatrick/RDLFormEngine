@@ -1,4 +1,4 @@
-import 'package:admin/models/Template.dart';
+import 'package:admin/models/ListTemplate.dart';
 import 'package:admin/screens/main/components/header.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
@@ -84,7 +84,7 @@ class Templates extends StatelessWidget {
   }
 }
 
-DataRow templatesDataRow(Template templateInfo) {
+DataRow templatesDataRow(ListTemplate templateInfo) {
   return DataRow(
     cells: [
       DataCell(

@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_if_null_operators
-
 import 'dart:convert';
 
 Question jsonFormFromJson(String str) => Question.fromJson(json.decode(str));
@@ -7,27 +5,32 @@ Question jsonFormFromJson(String str) => Question.fromJson(json.decode(str));
 String jsonFormToJson(Question data) => json.encode(data.toJson());
 
 class Question {
-  Question({required this.field, this.departament, required this.name});
+  Question({id, required this.field, this.departament, required this.name});
 
-  Field field;
+  int? id;
+  QuestionField? field;
   String? departament;
   String name;
 
   factory Question.fromJson(Map<String, dynamic> json) => Question(
+        id: json["id"],
         name: json["name"],
         departament: json["departament"],
-        field: json["field"].map((x) => Field.fromJson(x)),
+        field: json["field"] == null
+            ? null
+            : QuestionField.fromJson(json["field"]),
       );
 
   Map<String, dynamic> toJson() => {
+        "id": this.id,
         "name": this.name,
         "departament": this.departament,
-        "field": field.toJson(),
+        "field": field!.toJson(),
       };
 }
 
-class Field {
-  Field({
+class QuestionField {
+  QuestionField({
     required this.key,
     required this.type,
     required this.label,
@@ -43,19 +46,19 @@ class Field {
   String? placeholder;
   bool? required;
   dynamic value;
-  List<Item>? items;
+  List<QuestionFieldItem>? items;
 
-  factory Field.fromJson(Map<String, dynamic> json) => Field(
+  factory QuestionField.fromJson(Map<String, dynamic> json) => QuestionField(
         key: json["key"],
         type: json["type"],
         label: json["label"],
-        // ignore: prefer_if_null_operators
         placeholder: json["placeholder"] == null ? null : json["placeholder"],
         required: json["required"] == null ? null : json["required"],
         value: json["value"],
         items: json["items"] == null
             ? null
-            : List<Item>.from(json["items"].map((x) => Item.fromJson(x))),
+            : List<QuestionFieldItem>.from(
+                json["items"].map((x) => QuestionFieldItem.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -71,8 +74,8 @@ class Field {
       };
 }
 
-class Item {
-  Item({
+class QuestionFieldItem {
+  QuestionFieldItem({
     required this.label,
     required this.value,
   });
@@ -80,7 +83,8 @@ class Item {
   String label;
   dynamic value;
 
-  factory Item.fromJson(Map<String, dynamic> json) => Item(
+  factory QuestionFieldItem.fromJson(Map<String, dynamic> json) =>
+      QuestionFieldItem(
         label: json["label"],
         value: json["value"],
       );

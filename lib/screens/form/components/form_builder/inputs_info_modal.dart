@@ -25,8 +25,6 @@ class _InputsInfoModalState extends State<InputsInfoModal> {
     bool _isChecked = true;
     String _currText = '';
 
-    List<String> text = ["InduceSmile.com", "Flutter.io", "google.com"];
-
     Size screenSize = MediaQuery.of(context).size;
 
     return Dialog(

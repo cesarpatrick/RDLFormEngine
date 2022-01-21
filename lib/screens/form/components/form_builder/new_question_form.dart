@@ -75,6 +75,7 @@ class _NewQuestionFormState extends State<NewQuestionForm> {
                         Padding(
                           padding: const EdgeInsets.all(15),
                           child: TextField(
+                            onChanged: (value) {},
                             controller: nameController,
                             decoration: InputDecoration(
                               filled: true,

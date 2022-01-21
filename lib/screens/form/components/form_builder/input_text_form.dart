@@ -3,21 +3,21 @@ import 'package:admin/models/Question.dart';
 import 'package:admin/service/form_builder_service.dart';
 import 'package:flutter/material.dart';
 
-import 'preview_form.dart';
+import 'question_preview_input.dart';
 
-class InputForm extends StatefulWidget {
+class InputTextForm extends StatefulWidget {
   final String name;
   final String? departament;
-  const InputForm({Key? key, required this.name, this.departament})
+  const InputTextForm({Key? key, required this.name, this.departament})
       : super(key: key);
 
   @override
-  _InputFormState createState() => _InputFormState();
+  _InputTextFormState createState() => _InputTextFormState();
 }
 
-class _InputFormState extends State<InputForm> {
+class _InputTextFormState extends State<InputTextForm> {
   Question question = Question(
-      field: Field(
+      field: QuestionField(
         key: "",
         label: "",
         type: "Input",
@@ -48,7 +48,7 @@ class _InputFormState extends State<InputForm> {
   }
 
   void _updateQuestion() {
-    Field field = Field(
+    QuestionField field = QuestionField(
         key: "key",
         type: "Input",
         label: labelController.text,
@@ -140,7 +140,8 @@ class _InputFormState extends State<InputForm> {
                 ),
               ),
               horizontalDivider,
-              PreviewForm(question: this.question, inputType: INPUT_TEXT),
+              QuestionPreviewInput(
+                  question: this.question, inputType: INPUT_TEXT),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[

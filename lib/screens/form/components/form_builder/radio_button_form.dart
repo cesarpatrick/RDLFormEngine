@@ -2,7 +2,7 @@ import 'package:admin/constants.dart';
 import 'package:admin/models/Question.dart';
 import 'package:flutter/material.dart';
 
-import 'preview_form.dart';
+import 'question_preview_input.dart';
 
 class RadioButtonForm extends StatefulWidget {
   final String name;
@@ -17,7 +17,7 @@ class RadioButtonForm extends StatefulWidget {
 class _RadioButtonFormState extends State<RadioButtonForm> {
   bool initialValueRequiredSwitch = false;
 
-  List<Item> items = [];
+  List<QuestionFieldItem> items = [];
 
   TextEditingController labelController = TextEditingController();
   TextEditingController initialValueController = TextEditingController();
@@ -30,7 +30,7 @@ class _RadioButtonFormState extends State<RadioButtonForm> {
   bool _validateItemValue = false;
 
   Question question = Question(
-      field: Field(
+      field: QuestionField(
         key: "",
         label: "",
         type: "RadioButton",
@@ -55,7 +55,7 @@ class _RadioButtonFormState extends State<RadioButtonForm> {
   }
 
   void _updateQuestion() {
-    Field field = Field(
+    QuestionField field = QuestionField(
         key: "key",
         type: "RadioButton",
         label: labelController.text,
@@ -81,7 +81,7 @@ class _RadioButtonFormState extends State<RadioButtonForm> {
   }
 
   void _addOption(String label, dynamic value) {
-    items.add(Item(label: label, value: value));
+    items.add(QuestionFieldItem(label: label, value: value));
     labelItemController.text = "";
     valueItemController.text = "";
 
@@ -294,7 +294,7 @@ class _RadioButtonFormState extends State<RadioButtonForm> {
                     ]),
                 SizedBox(height: 20),
                 horizontalDivider,
-                PreviewForm(
+                QuestionPreviewInput(
                     question: this.question, inputType: RADIO_BUTTON_INPUT),
                 SizedBox(height: 20),
                 Row(

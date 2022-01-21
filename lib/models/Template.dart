@@ -1,50 +1,32 @@
+import 'dart:convert';
+
+import 'package:admin/models/Question.dart';
+
+Template jsonFormFromJson(String str) => Template.fromJson(json.decode(str));
+
+String jsonFormToJson(Template data) => json.encode(data.toJson());
+
 class Template {
-  final String? icon, title, date, size;
+  Template(
+      {this.id, required this.name, required this.questions, this.departament});
 
-  Template({this.icon, this.title, this.date, this.size});
+  int? id;
+  String name;
+  List<Question> questions;
+  String? departament;
+
+  factory Template.fromJson(Map<String, dynamic> json) => Template(
+        id: json["id"],
+        name: json["name"],
+        questions: List<Question>.from(
+            json["questions"].map((x) => Question.fromJson(x))),
+        departament: json["departament"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": this.id,
+        "name": this.name,
+        "questions": List<dynamic>.from(questions.map((x) => x.toJson())),
+        "departament": this.departament
+      };
 }
-
-List demoRecentFiles = [
-  Template(
-    icon: "assets/icons/doc_file.svg",
-    title: "XD File",
-    date: "01-03-2021",
-    size: "Workshop",
-  ),
-  Template(
-    icon: "assets/icons/doc_file.svg",
-    title: "Figma File",
-    date: "27-02-2021",
-    size: "Workshop",
-  ),
-  Template(
-    icon: "assets/icons/doc_file.svg",
-    title: "Document",
-    date: "23-02-2021",
-    size: "Human Resources",
-  ),
-  Template(
-    icon: "assets/icons/doc_file.svg",
-    title: "Sound File",
-    date: "21-02-2021",
-    size: "Human Resources",
-  ),
-  Template(
-    icon: "assets/icons/doc_file.svg",
-    title: "Media File",
-    date: "23-02-2021",
-    size: "Human Resources",
-  ),
-  Template(
-    icon: "assets/icons/doc_file.svg",
-    title: "Sales PDF",
-    date: "25-02-2021",
-    size: "IT",
-  ),
-  Template(
-    icon: "assets/icons/doc_file.svg",
-    title: "Excel File",
-    date: "25-02-2021",
-    size: "IT",
-  ),
-];

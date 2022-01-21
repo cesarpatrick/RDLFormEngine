@@ -2,7 +2,7 @@ import 'package:admin/constants.dart';
 import 'package:admin/models/Question.dart';
 import 'package:flutter/material.dart';
 
-import 'preview_form.dart';
+import 'question_preview_input.dart';
 
 class TextAreaInputForm extends StatefulWidget {
   final String name;
@@ -16,7 +16,7 @@ class TextAreaInputForm extends StatefulWidget {
 
 class _TextAreaInputFormState extends State<TextAreaInputForm> {
   Question question = Question(
-      field: Field(
+      field: QuestionField(
         key: "",
         label: "",
         type: "Input",
@@ -45,7 +45,7 @@ class _TextAreaInputFormState extends State<TextAreaInputForm> {
   }
 
   void _updateQuestion() {
-    Field field = Field(
+    QuestionField field = QuestionField(
         key: "key",
         type: "Input",
         label: labelController.text,
@@ -136,7 +136,8 @@ class _TextAreaInputFormState extends State<TextAreaInputForm> {
                 ),
               ),
               horizontalDivider,
-              PreviewForm(question: this.question, inputType: TEXT_AREA_INPUT),
+              QuestionPreviewInput(
+                  question: this.question, inputType: TEXT_AREA_INPUT),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[

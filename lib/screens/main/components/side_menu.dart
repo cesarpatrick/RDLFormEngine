@@ -18,11 +18,29 @@ class SideMenu extends StatelessWidget {
       child: ListView(
         children: [
           DrawerHeader(
-            child: Image.asset("assets/images/logo.png"),
-            decoration: BoxDecoration(
-              color: Colors.white,
-            ),
-          ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
+              child: Column(children: [
+                Image.asset("assets/images/logo.png", width: 110, height: 110),
+                SizedBox(height: 5),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.person,
+                        color: Colors.blue[900],
+                        size: 15.0,
+                      ),
+                      SizedBox(width: 5),
+                      Text(
+                          userService.getUser().firstName! +
+                              " " +
+                              userService.getUser().lastName!,
+                          style: TextStyle(color: Colors.blue[900]))
+                    ])
+              ])),
           DrawerListTile(
             title: "Templates",
             svgSrc: "assets/icons/menu_dashbord.svg",
@@ -31,7 +49,7 @@ class SideMenu extends StatelessWidget {
             },
           ),
           DrawerListTile(
-            title: "Questions Builder",
+            title: "Questions",
             svgSrc: "assets/icons/menu_tran.svg",
             press: () {
               Navigator.pushNamed(context, QUESTIONS_ROUTE);

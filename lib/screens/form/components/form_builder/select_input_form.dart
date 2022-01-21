@@ -2,7 +2,7 @@ import 'package:admin/constants.dart';
 import 'package:admin/models/Question.dart';
 import 'package:flutter/material.dart';
 
-import 'preview_form.dart';
+import 'question_preview_input.dart';
 
 class SelectInputForm extends StatefulWidget {
   final String name;
@@ -17,7 +17,7 @@ class SelectInputForm extends StatefulWidget {
 class _SelectInputFormState extends State<SelectInputForm> {
   bool initialValueRequiredSwitch = false;
 
-  List<Item> items = [];
+  List<QuestionFieldItem> items = [];
 
   TextEditingController labelController = TextEditingController();
   TextEditingController initialValueController = TextEditingController();
@@ -30,7 +30,7 @@ class _SelectInputFormState extends State<SelectInputForm> {
   bool _validateItemValue = false;
 
   Question question = Question(
-      field: Field(
+      field: QuestionField(
         key: "",
         label: "",
         type: "Input",
@@ -55,7 +55,7 @@ class _SelectInputFormState extends State<SelectInputForm> {
   }
 
   void _updateQuestion() {
-    Field field = Field(
+    QuestionField field = QuestionField(
         key: "key",
         type: "Select",
         label: labelController.text,
@@ -79,7 +79,7 @@ class _SelectInputFormState extends State<SelectInputForm> {
   }
 
   void _addOption(String label, dynamic value) {
-    items.add(Item(label: label, value: value));
+    items.add(QuestionFieldItem(label: label, value: value));
     labelItemController.text = "";
     valueItemController.text = "";
     setState(() {
@@ -291,7 +291,8 @@ class _SelectInputFormState extends State<SelectInputForm> {
                     ]),
                 SizedBox(height: 20),
                 horizontalDivider,
-                PreviewForm(question: this.question, inputType: SELECT_INPUT),
+                QuestionPreviewInput(
+                    question: this.question, inputType: SELECT_INPUT),
                 const SizedBox(height: 50),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,

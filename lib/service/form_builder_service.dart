@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:admin/models/Question.dart';
 import 'package:admin/screens/form/components/form_builder/checkbox_input_form.dart';
-import 'package:admin/screens/form/components/form_builder/input_form.dart';
+import 'package:admin/screens/form/components/form_builder/input_text_form.dart';
 import 'package:admin/screens/form/components/form_builder/radio_button_form.dart';
 import 'package:admin/screens/form/components/form_builder/select_input_form.dart';
 import 'package:admin/screens/form/components/form_builder/switch_input_form.dart';
@@ -15,7 +15,7 @@ class FormBuilderService {
   Widget getFormByInputType(String name, String type, String departament) {
     switch (type) {
       case INPUT_TEXT:
-        return InputForm(name: name, departament: departament);
+        return InputTextForm(name: name, departament: departament);
       case TEXT_AREA_INPUT:
         return TextAreaInputForm(name: name, departament: departament);
       case SWITCH:
@@ -52,16 +52,16 @@ class FormBuilderService {
 
   Widget inputTextPreview(Question question) {
     TextEditingController labelController = TextEditingController();
-    labelController.text = question.field.value;
+    labelController.text = question.field!.value;
 
     return Padding(
         padding: EdgeInsets.all(15),
         child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 20),
-              Text(question.field.label,
+              Text(question.field!.label,
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 16,
@@ -88,12 +88,12 @@ class FormBuilderService {
 
     list.add(DropdownMenuItem<String>(value: "", child: Text("")));
 
-    if (question.field.value != null && question.field.value != "") {
-      _departamentDropdownValue = question.field.value;
+    if (question.field!.value != null && question.field!.value != "") {
+      _departamentDropdownValue = question.field!.value;
     }
 
-    if (question.field.items != null) {
-      for (Item item in question.field.items!) {
+    if (question.field!.items != null) {
+      for (QuestionFieldItem item in question.field!.items!) {
         list.add(DropdownMenuItem<String>(
             value: item.value, child: Text(item.label)));
       }
@@ -116,7 +116,7 @@ class FormBuilderService {
                       const SizedBox(
                         width: 20,
                       ),
-                      Text(question.field.label, style: textStyle),
+                      Text(question.field!.label, style: textStyle),
                       const SizedBox(
                         width: 20,
                       ),
@@ -144,7 +144,7 @@ class FormBuilderService {
   Widget switchInputPreview(Question question) {
     bool switchValue = false;
 
-    if (question.field.value == "true") {
+    if (question.field!.value == "true") {
       switchValue = true;
     }
 
@@ -155,7 +155,7 @@ class FormBuilderService {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: 20),
-              Text(question.field.label,
+              Text(question.field!.label,
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 16,
@@ -171,42 +171,49 @@ class FormBuilderService {
   }
 
   Widget radioButtonInputPreview(Question question) {
-    dynamic selectedValue = question.field.value;
+    dynamic selectedValue = question.field!.value;
 
     List<Widget> listWidget = [];
 
-    if (question.field.items != null) {
-      for (Item item in question.field.items!) {
+    if (question.field!.items != null) {
+      for (QuestionFieldItem item in question.field!.items!) {
         listWidget.add(new Row(
           children: <Widget>[
-            new Expanded(child: Text(item.label, style: textStyle)),
             new Radio<dynamic>(
-                activeColor: primaryColor,
+                activeColor: Colors.black,
                 value: item.value,
                 groupValue: selectedValue,
-                onChanged: (dynamic value) {})
+                onChanged: (dynamic value) {}),
+            Text(item.label, style: blackTextStyleNoBold),
           ],
         ));
       }
 
-      return Column(children: [
-        Text(question.field.label, style: textStyle),
-        new Container(
-          margin: new EdgeInsets.only(top: 5.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: listWidget,
-          ),
-        )
-      ]);
+      return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(question.field!.label, style: blackTextStyle),
+            new Container(
+              margin: new EdgeInsets.only(top: 5.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: listWidget,
+              ),
+            )
+          ]);
     } else {
-      return Container(child: Text(question.field.label, style: textStyle));
+      return Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [Text(question.field!.label, style: blackTextStyle)]);
     }
   }
 
   Widget inputTextAreaPreview(Question question) {
     TextEditingController valueController = TextEditingController();
-    valueController.text = question.field.value;
+    valueController.text = question.field!.value;
 
     return Padding(
         padding: EdgeInsets.all(15),
@@ -214,7 +221,7 @@ class FormBuilderService {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(question.field.label,
+              Text(question.field!.label,
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 16,
@@ -274,8 +281,8 @@ class FormBuilderService {
   Widget checkBoxInputPreview(Question question) {
     List<Widget> listWidget = [];
 
-    if (question.field.items != null) {
-      for (Item item in question.field.items!) {
+    if (question.field!.items != null) {
+      for (QuestionFieldItem item in question.field!.items!) {
         bool boolValue = false;
 
         if (item.value == "true") {
@@ -283,28 +290,37 @@ class FormBuilderService {
         }
 
         listWidget.add(new Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            new Expanded(child: Text(item.label, style: textStyle)),
             new Checkbox(
-                activeColor: primaryColor,
+                activeColor: Colors.black,
                 value: boolValue,
-                onChanged: (dynamic value) {})
+                onChanged: (dynamic value) {}),
+            Text(item.label, style: blackTextStyleNoBold),
           ],
         ));
       }
 
-      return Column(children: [
-        Text(question.field.label, style: textStyle),
-        new Container(
-          margin: new EdgeInsets.only(top: 5.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: listWidget,
-          ),
-        )
-      ]);
+      return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(question.field!.label, style: blackTextStyle),
+            new Container(
+              margin: new EdgeInsets.only(top: 5.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: listWidget,
+              ),
+            )
+          ]);
     } else {
-      return Container(child: Text(question.field.label, style: textStyle));
+      return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [Text(question.field!.label, style: blackTextStyle)]);
     }
   }
 
