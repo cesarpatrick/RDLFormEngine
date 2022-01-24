@@ -9,7 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class TemplateFormBuilder extends StatefulWidget {
-  const TemplateFormBuilder({Key? key}) : super(key: key);
+  final String name;
+  const TemplateFormBuilder({Key? key, required this.name}) : super(key: key);
 
   @override
   _TemplateFormBuilderState createState() => _TemplateFormBuilderState();
@@ -27,14 +28,14 @@ class _TemplateFormBuilderState extends State<TemplateFormBuilder> {
   late List<Question> questions = [];
 
   QuestionField field = QuestionField(
-      key: "key",
+      key: "keyInput",
       type: "Input",
       label: "Input Text Test",
       value: "",
       required: true);
 
   QuestionField field2 = QuestionField(
-      key: "key",
+      key: "keyTextArea",
       type: "TextArea",
       label: "Text area test",
       value: "",
@@ -44,7 +45,7 @@ class _TemplateFormBuilderState extends State<TemplateFormBuilder> {
       key: "key",
       type: "Switch",
       label: "Switch test",
-      value: "",
+      value: true,
       required: true);
 
   QuestionFieldItem item = QuestionFieldItem(label: "", value: "");
@@ -52,8 +53,13 @@ class _TemplateFormBuilderState extends State<TemplateFormBuilder> {
   QuestionFieldItem item3 = QuestionFieldItem(label: "Maria", value: "Maria");
   QuestionFieldItem item4 = QuestionFieldItem(label: "Cesar", value: "Cesar");
 
+  QuestionFieldItem item5 = QuestionFieldItem(label: "Honda", value: false);
+  QuestionFieldItem item6 = QuestionFieldItem(label: "Fiat", value: false);
+  QuestionFieldItem item7 = QuestionFieldItem(label: "Toyota", value: true);
+
   late List<QuestionFieldItem> items = [];
   late List<QuestionFieldItem> items2 = [];
+  late List<QuestionFieldItem> items3 = [];
 
   QuestionField field4 = QuestionField(
       key: "key",
@@ -64,9 +70,17 @@ class _TemplateFormBuilderState extends State<TemplateFormBuilder> {
       items: []);
 
   QuestionField field5 = QuestionField(
-      key: "key",
+      key: "keyRadio",
       type: "RadioButton",
       label: "Radio Button test",
+      value: "",
+      required: true,
+      items: []);
+
+  QuestionField field6 = QuestionField(
+      key: "keyRadio",
+      type: "Checkbox",
+      label: "Checkbox test",
       value: "",
       required: true,
       items: []);
@@ -86,7 +100,10 @@ class _TemplateFormBuilderState extends State<TemplateFormBuilder> {
   late Question question5 =
       Question(field: field5, name: "Question Name", departament: "");
 
-  Template form = Template(name: "Template Test Name", questions: []);
+  late Question question6 =
+      Question(field: field6, name: "Question Name", departament: "");
+
+  Template form = Template(name: "Template Name", questions: []);
 
   dynamic response;
 
@@ -100,10 +117,12 @@ class _TemplateFormBuilderState extends State<TemplateFormBuilder> {
     );
   }
 
-  String _departamentDropdownValue = "";
   @override
-  Widget build(BuildContext context) {
-    //Input Text
+  void initState() {
+    form.name = widget.name;
+
+    super.initState();
+    //INput Text
     questions.add(question);
     //Text Area
     questions.add(question2);
@@ -125,9 +144,41 @@ class _TemplateFormBuilderState extends State<TemplateFormBuilder> {
     question5.field!.items = items2;
     questions.add(question5);
 
-    form.questions = questions;
-    print(jsonEncode(form));
+    //Checkbox Button
+    items3.add(item5);
+    items3.add(item6);
+    items3.add(item7);
+    question6.field!.items = items3;
+    questions.add(question6);
 
+    form.questions = questions;
+    form.name = widget.name;
+    print(jsonEncode(form));
+  }
+
+  void _addQuestion1() {
+    questions.add(question);
+    form.questions = questions;
+  }
+
+  void _addQuestion2() {
+    questions.add(question3);
+    form.questions = questions;
+  }
+
+  void _addQuestion3() {
+    questions.add(question2);
+    form.questions = questions;
+  }
+
+  void _undo() {
+    questions.removeLast();
+    form.questions = questions;
+  }
+
+  String _departamentDropdownValue = "";
+  @override
+  Widget build(BuildContext context) {
     final _screen = MediaQuery.of(context).size;
     return Column(
       children: [
@@ -202,7 +253,11 @@ class _TemplateFormBuilderState extends State<TemplateFormBuilder> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 ElevatedButton(
-                  onPressed: () => {},
+                  onPressed: () => {
+                    setState(() {
+                      _undo();
+                    })
+                  },
                   style: ButtonStyle(
                     backgroundColor:
                         MaterialStateProperty.all<Color>(Colors.red),
@@ -228,7 +283,7 @@ class _TemplateFormBuilderState extends State<TemplateFormBuilder> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                width: _screen.width / 3,
+                width: _screen.width / 4,
                 height: _screen.height / 2,
                 padding: const EdgeInsets.all(3.0),
                 decoration: BoxDecoration(
@@ -240,7 +295,12 @@ class _TemplateFormBuilderState extends State<TemplateFormBuilder> {
                   children: [
                     ListView(children: [
                       ElevatedButton(
-                        onPressed: () => {},
+                        onPressed: () => {
+                          setState(() {
+                            _addQuestion1();
+                            _setScrollToEnd();
+                          })
+                        },
                         style: ButtonStyle(
                           backgroundColor:
                               MaterialStateProperty.all<Color>(primaryColor),
@@ -257,7 +317,12 @@ class _TemplateFormBuilderState extends State<TemplateFormBuilder> {
                       ),
                       SizedBox(height: 3),
                       ElevatedButton(
-                        onPressed: () => {_setScrollToEnd()},
+                        onPressed: () => {
+                          setState(() {
+                            _addQuestion2();
+                            _setScrollToEnd();
+                          })
+                        },
                         style: ButtonStyle(
                           backgroundColor:
                               MaterialStateProperty.all<Color>(primaryColor),
@@ -274,7 +339,12 @@ class _TemplateFormBuilderState extends State<TemplateFormBuilder> {
                       ),
                       SizedBox(height: 3),
                       ElevatedButton(
-                        onPressed: () => {},
+                        onPressed: () => {
+                          setState(() {
+                            _addQuestion3();
+                            _setScrollToEnd();
+                          })
+                        },
                         style: ButtonStyle(
                           backgroundColor:
                               MaterialStateProperty.all<Color>(primaryColor),
@@ -295,7 +365,7 @@ class _TemplateFormBuilderState extends State<TemplateFormBuilder> {
               ),
               VerticalDivider(width: 2.0),
               Container(
-                width: _screen.width / 3,
+                width: _screen.width / 2,
                 height: _screen.height / 2,
                 padding: const EdgeInsets.all(3.0),
                 decoration: BoxDecoration(
@@ -316,7 +386,8 @@ class _TemplateFormBuilderState extends State<TemplateFormBuilder> {
                               print(response);
                               questions =
                                   Template.fromJson(this.response).questions;
-                              form = Template(name: "", questions: questions);
+                              form = Template(
+                                  name: widget.name, questions: questions);
                             });
                           },
                           actionSave: (data) {

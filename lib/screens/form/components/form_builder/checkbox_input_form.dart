@@ -2,7 +2,7 @@ import 'package:admin/constants.dart';
 import 'package:admin/models/Question.dart';
 import 'package:flutter/material.dart';
 
-import 'preview_form.dart';
+import 'question_preview_input.dart';
 
 class CheckboxInputForm extends StatefulWidget {
   final String name;
@@ -16,7 +16,7 @@ class CheckboxInputForm extends StatefulWidget {
 
 class _CheckboxInputFormState extends State<CheckboxInputForm> {
   Question question = Question(
-      field: Field(
+      field: QuestionField(
         key: "",
         label: "",
         type: "Checkbox",
@@ -27,7 +27,7 @@ class _CheckboxInputFormState extends State<CheckboxInputForm> {
   bool initialValueRequiredSwitch = false;
   bool initialValueOptionSwitch = false;
 
-  List<Item> items = [];
+  List<QuestionFieldItem> items = [];
 
   TextEditingController labelController = TextEditingController();
   TextEditingController initialValueController = TextEditingController();
@@ -54,7 +54,7 @@ class _CheckboxInputFormState extends State<CheckboxInputForm> {
   }
 
   void _updateQuestion() {
-    Field field = Field(
+    QuestionField field = QuestionField(
         key: "key",
         type: "Checkbox",
         label: labelController.text,
@@ -80,7 +80,7 @@ class _CheckboxInputFormState extends State<CheckboxInputForm> {
   }
 
   void _addOption(String label, dynamic value) {
-    items.add(Item(label: label, value: value));
+    items.add(QuestionFieldItem(label: label, value: value));
     labelItemController.text = "";
     _updateQuestion();
   }
@@ -258,7 +258,9 @@ class _CheckboxInputFormState extends State<CheckboxInputForm> {
                     ]),
                 const SizedBox(height: 50),
                 horizontalDivider,
-                PreviewForm(question: this.question, inputType: CHECKBOX_INPUT),
+                QuestionPreviewInput(
+                    question: this.question, inputType: CHECKBOX_INPUT),
+                const SizedBox(height: 20),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.end,

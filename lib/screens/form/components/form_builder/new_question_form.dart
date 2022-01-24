@@ -119,9 +119,7 @@ class _NewQuestionFormState extends State<NewQuestionForm> {
                               });
                             },
                             items: departamentTypeDropDownItemList,
-                          )
-                        ]),
-                        Row(children: <Widget>[
+                          ),
                           const SizedBox(
                             width: 20,
                           ),

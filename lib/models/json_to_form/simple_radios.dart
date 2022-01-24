@@ -30,11 +30,11 @@ class _SimpleRadios extends State<SimpleRadios> {
   dynamic item;
   late String radioValue;
 
-  String isRequired(item, value) {
-    if (value.isEmpty) {
-      return widget.errorMessages[item['key']] ?? 'Please enter some text';
+  String? isRequired(item, value) {
+    if (value == null || value.isEmpty) {
+      return widget.errorMessages[item['key']] ?? 'Please select one option';
     }
-    return "";
+    return null;
   }
 
   @override
@@ -59,17 +59,27 @@ class _SimpleRadios extends State<SimpleRadios> {
       radios.add(
         new Row(
           children: <Widget>[
-            new Radio<dynamic>(
-                activeColor: Colors.black,
-                value: item['items'][i]['value'],
-                groupValue: radioValue,
-                onChanged: (dynamic value) {
-                  this.setState(() {
-                    radioValue = value;
-                    item['value'] = value;
-                    widget.onChange!(widget.position, value);
-                  });
-                }),
+            FormField(builder: (FormFieldState<bool> state) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  new Radio<dynamic>(
+                      activeColor: Colors.black,
+                      value: item['items'][i]['value'],
+                      groupValue: radioValue,
+                      onChanged: (dynamic value) {
+                        this.setState(() {
+                          radioValue = value;
+                          item['value'] = value;
+                          widget.onChange!(widget.position, value);
+                        });
+                      })
+                ],
+              );
+            }, validator: (value) {
+              if (value != null && value != "") return 'Please enter your name';
+              return null;
+            }),
             new Text(item['items'][i]['label'], style: blackTextStyle)
           ],
         ),

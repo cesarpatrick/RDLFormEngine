@@ -28,11 +28,11 @@ class SimpleText extends StatefulWidget {
 class _SimpleText extends State<SimpleText> {
   dynamic item;
 
-  String isRequired(item, value) {
+  String? isRequired(item, value) {
     if (value.isEmpty) {
       return widget.errorMessages[item['key']] ?? 'Please enter some text';
     }
-    return "";
+    return null;
   }
 
   @override
@@ -45,7 +45,6 @@ class _SimpleText extends State<SimpleText> {
   Widget build(BuildContext context) {
     Widget label = SizedBox.shrink();
     if (Fun.labelHidden(item)) {
-      print(item['label']);
       label = new Container(
         child: new Text(
           item['label'],
@@ -67,6 +66,9 @@ class _SimpleText extends State<SimpleText> {
             decoration: item['decoration'] ??
                 widget.decorations[item['key']] ??
                 new InputDecoration(
+                    errorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.red),
+                    ),
                     hintText: item['placeholder'] ?? "",
                     helperText: item['helpText'] ?? "",
                     filled: true,

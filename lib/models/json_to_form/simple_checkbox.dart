@@ -1,3 +1,4 @@
+import 'package:admin/constants.dart';
 import 'package:flutter/material.dart';
 import 'functions.dart';
 
@@ -50,15 +51,14 @@ class _SimpleListCheckbox extends State<SimpleListCheckbox> {
   Widget build(BuildContext context) {
     List<Widget> checkboxes = [];
     if (Fun.labelHidden(item)) {
-      checkboxes.add(new Text(item['label'],
-          style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0)));
+      checkboxes.add(new Text(item['label'], style: blackTextStyle));
     }
     for (var i = 0; i < item['items'].length; i++) {
       checkboxes.add(
         new Row(
           children: <Widget>[
-            new Expanded(child: new Text(item['items'][i]['label'])),
             new Checkbox(
+              activeColor: Colors.black,
               value: item['items'][i]['value'],
               onChanged: (bool? value) {
                 this.setState(
@@ -75,6 +75,7 @@ class _SimpleListCheckbox extends State<SimpleListCheckbox> {
                 );
               },
             ),
+            new Text(item['items'][i]['label'], style: blackTextStyle),
           ],
         ),
       );
