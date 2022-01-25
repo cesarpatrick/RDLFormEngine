@@ -62,7 +62,7 @@ class _SimpleSwitch extends State<SimpleSwitch> {
           activeTrackColor: Colors.blue,
           onChanged: (bool value) {
             this.setState(() {
-              switchValue = value;
+              item['value'] = value;
               widget.onChange!(widget.position, value);
             });
           },

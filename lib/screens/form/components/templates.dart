@@ -1,5 +1,6 @@
 import 'package:admin/models/ListTemplate.dart';
 import 'package:admin/screens/main/components/header.dart';
+import 'package:admin/util.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -7,13 +8,25 @@ import 'package:flutter_svg/svg.dart';
 import '../../../constants.dart';
 import '../../../responsive.dart';
 
-class Templates extends StatelessWidget {
+class Templates extends StatefulWidget {
   const Templates({
     Key? key,
   }) : super(key: key);
 
   @override
+  _TemplatesState createState() => _TemplatesState();
+}
+
+class _TemplatesState extends State<Templates> {
+  List<DropdownMenuItem<String>> departamentTypeDropDownItemList =
+      Util.getDepartamentsDropdownMenu();
+
+  String _departamentDropdownValue = "";
+
+  @override
   Widget build(BuildContext context) {
+    Size _screen = MediaQuery.of(context).size;
+
     return Container(
       padding: EdgeInsets.all(defaultPadding),
       decoration: BoxDecoration(
@@ -24,15 +37,76 @@ class Templates extends StatelessWidget {
         children: [
           Header(),
           Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Row(children: <Widget>[
+                  Container(
+                      width: _screen.width / 6,
+                      child: Center(
+                          child: TextField(
+                              decoration: InputDecoration(
+                        hintText: "Search",
+                        fillColor: primaryColor,
+                        filled: true,
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10)),
+                        ),
+                        suffixIcon: InkWell(
+                          onTap: () {},
+                          child: Container(
+                            padding: EdgeInsets.all(defaultPadding * 0.75),
+                            margin: EdgeInsets.symmetric(
+                                horizontal: defaultPadding / 2),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10)),
+                            ),
+                            child: SvgPicture.asset("assets/icons/Search.svg",
+                                color: primaryColor),
+                          ),
+                        ),
+                      )))),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  Text("Departament", style: textStyle),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  DropdownButton<String>(
+                    icon: Icon(
+                      // Add this
+                      Icons.arrow_drop_down, // Add this
+                      color: primaryColor, // Add this
+                    ),
+                    value: _departamentDropdownValue,
+                    style: const TextStyle(color: primaryColor),
+                    dropdownColor: Colors.white,
+                    underline: Container(
+                      height: 2,
+                      color: primaryColor,
+                    ),
+                    onChanged: (newValue) {
+                      setState(() {
+                        _departamentDropdownValue = newValue!;
+                      });
+                    },
+                    items: departamentTypeDropDownItemList,
+                  )
+                ]),
                 ElevatedButton.icon(
                   onPressed: () {
                     Navigator.pushNamed(context, NEW_TEMPLATE_FORM);
                   },
                   icon: Icon(Icons.add),
-                  label: Text("Add New"),
+                  label: Text("New"),
                   style: TextButton.styleFrom(
                       padding: EdgeInsets.symmetric(
                         horizontal: defaultPadding * 1.5,

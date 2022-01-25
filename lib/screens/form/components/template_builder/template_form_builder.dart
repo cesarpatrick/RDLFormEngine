@@ -157,16 +157,19 @@ class _TemplateFormBuilderState extends State<TemplateFormBuilder> {
   }
 
   void _addQuestion1() {
+    question.field!.label = "Whats your name ?";
     questions.add(question);
     form.questions = questions;
   }
 
   void _addQuestion2() {
+    question3.field!.label = "I agree with the terms and conditions";
     questions.add(question3);
     form.questions = questions;
   }
 
   void _addQuestion3() {
+    question2.field!.label = "Job Description";
     questions.add(question2);
     form.questions = questions;
   }
@@ -309,7 +312,7 @@ class _TemplateFormBuilderState extends State<TemplateFormBuilder> {
                           text: const TextSpan(
                             children: [
                               TextSpan(
-                                  text: "Test Question 1: How are You ?",
+                                  text: "Test Question 1: What's your name ?",
                                   style: TextStyle(color: Colors.white))
                             ],
                           ),
@@ -331,7 +334,8 @@ class _TemplateFormBuilderState extends State<TemplateFormBuilder> {
                           text: const TextSpan(
                             children: [
                               TextSpan(
-                                  text: "Test Question 2: What's your name ?",
+                                  text:
+                                      "Test Question 2: Terms and conditions ?",
                                   style: TextStyle(color: Colors.white))
                             ],
                           ),
@@ -353,7 +357,7 @@ class _TemplateFormBuilderState extends State<TemplateFormBuilder> {
                           text: const TextSpan(
                             children: [
                               TextSpan(
-                                  text: "Test Question 3: How old are you ?",
+                                  text: "Test Question 3: Job description ?",
                                   style: TextStyle(color: Colors.white))
                             ],
                           ),

@@ -9,9 +9,15 @@ const bgColor = Colors.white;
 const titleStyle =
     TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: primaryColor);
 
+const titleStyle2 =
+    TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: primaryColor);
+
 const textStyle = TextStyle(color: textGreenColor, fontWeight: FontWeight.bold);
 const whiteTextStyle =
     TextStyle(color: secondaryColor, fontWeight: FontWeight.bold);
+const blackTextStyle =
+    TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold);
+const blackTextStyleNoBold = TextStyle(color: Colors.black, fontSize: 14);
 
 const horizontalDivider = const Divider(
   thickness: 5, // thickness of the line
@@ -32,12 +38,12 @@ const String NEW_QUESTION_FORM = "/newQuestion";
 const String NEW_TEMPLATE_FORM = "/newTemplate";
 
 //QUESTION TYPES
-const String INPUT_TEXT = "INPUT TEXT";
-const String SWITCH = "SWITCH";
-const String CHECKBOX_INPUT = "CHECKBOX";
-const String SELECT_INPUT = "SELECT INPUT";
-const String TEXT_AREA_INPUT = "TEXT AREA";
-const String RADIO_BUTTON_INPUT = "RADIO BUTTON";
+const String INPUT_TEXT = "Input";
+const String SWITCH = "Switch";
+const String CHECKBOX_INPUT = "Checkbox";
+const String SELECT_INPUT = "Select";
+const String TEXT_AREA_INPUT = "TextArea";
+const String RADIO_BUTTON_INPUT = "RadioButton";
 
 //DEPARTAMENTS
 const String IT = "INFORMATION TECHNOLOGY";

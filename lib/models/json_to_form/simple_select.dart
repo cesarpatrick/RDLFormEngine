@@ -29,11 +29,11 @@ class SimpleSelect extends StatefulWidget {
 class _SimpleSelect extends State<SimpleSelect> {
   dynamic item;
 
-  String isRequired(item, value) {
+  String? isRequired(item, value) {
     if (value.isEmpty) {
-      return widget.errorMessages[item['key']] ?? 'Please enter some text';
+      return widget.errorMessages[item['key']] ?? 'Please select one option';
     }
-    return "";
+    return null;
   }
 
   @override
@@ -61,15 +61,18 @@ class _SimpleSelect extends State<SimpleSelect> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           label,
-          new DropdownButton<String>(
+          new DropdownButtonFormField<String>(
             icon: Icon(
               Icons.arrow_drop_down,
               color: Colors.black,
             ),
-            underline: Container(
-              height: 2,
-              color: Colors.black,
-            ),
+            decoration: new InputDecoration(
+                border: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black),
+                ),
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black),
+                )),
             hint: new Text("Select a user"),
             value: selectValue,
             onChanged: (String? newValue) {
@@ -77,6 +80,20 @@ class _SimpleSelect extends State<SimpleSelect> {
                 item['value'] = newValue;
                 widget.onChange!(widget.position, newValue);
               });
+            },
+            validator: (value) {
+              if (widget.validations.containsKey(item['key'])) {
+                return widget.validations[item['key']](item, value);
+              }
+
+              if (item.containsKey('required')) {
+                if (item['required'] == true ||
+                    item['required'] == 'True' ||
+                    item['required'] == 'true') {
+                  return isRequired(item, value);
+                }
+              }
+              return null;
             },
             items: item['items'].map<DropdownMenuItem<String>>((dynamic data) {
               return DropdownMenuItem<String>(
