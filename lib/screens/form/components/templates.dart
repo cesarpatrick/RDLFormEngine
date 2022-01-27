@@ -38,7 +38,7 @@ class _TemplatesState extends State<Templates> {
           Header(),
           Row(
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Row(children: <Widget>[
                   Container(
@@ -101,20 +101,6 @@ class _TemplatesState extends State<Templates> {
                     items: departamentTypeDropDownItemList,
                   )
                 ]),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.pushNamed(context, NEW_TEMPLATE_FORM);
-                  },
-                  icon: Icon(Icons.add),
-                  label: Text("New"),
-                  style: TextButton.styleFrom(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: defaultPadding * 1.5,
-                        vertical: defaultPadding /
-                            (Responsive.isMobile(context) ? 2 : 1),
-                      ),
-                      backgroundColor: primaryColor),
-                )
               ]),
           SizedBox(
             height: 20,
@@ -124,6 +110,26 @@ class _TemplatesState extends State<Templates> {
             style: TextStyle(
                 fontSize: 20, color: primaryColor, fontWeight: FontWeight.bold),
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.pushNamed(context, NEW_TEMPLATE_FORM);
+                },
+                icon: Icon(Icons.add),
+                label: Text("Add New"),
+                style: TextButton.styleFrom(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: defaultPadding * 1.5,
+                      vertical: defaultPadding /
+                          (Responsive.isMobile(context) ? 2 : 1),
+                    ),
+                    backgroundColor: primaryColor),
+              )
+            ],
+          ),
           SizedBox(
             width: double.infinity,
             child: Theme(
@@ -131,6 +137,7 @@ class _TemplatesState extends State<Templates> {
               child: DataTable2(
                 columnSpacing: defaultPadding,
                 minWidth: 600,
+                dataRowHeight: 50,
                 columns: [
                   DataColumn(
                     label: Text(
@@ -147,7 +154,7 @@ class _TemplatesState extends State<Templates> {
                 ],
                 rows: List.generate(
                   demoRecentFiles.length,
-                  (index) => templatesDataRow(demoRecentFiles[index]),
+                  (index) => templatesDataRow(demoRecentFiles[index], _screen),
                 ),
               ),
             ),
@@ -158,11 +165,12 @@ class _TemplatesState extends State<Templates> {
   }
 }
 
-DataRow templatesDataRow(ListTemplate templateInfo) {
+DataRow templatesDataRow(ListTemplate templateInfo, Size screenSize) {
   return DataRow(
     cells: [
-      DataCell(
-        Row(
+      DataCell(Container(
+        width: (screenSize.width / 10) * 3,
+        child: Row(
           children: [
             SvgPicture.asset(
               templateInfo.icon!,
@@ -175,9 +183,13 @@ DataRow templatesDataRow(ListTemplate templateInfo) {
             ),
           ],
         ),
-      ),
-      DataCell(Text(templateInfo.date!, style: textStyle)),
-      DataCell(Text(templateInfo.size!, style: textStyle)),
+      )),
+      DataCell(Container(
+          width: (screenSize.width / 10) * 3,
+          child: Text(templateInfo.date!, style: textStyle))),
+      DataCell(Container(
+          width: (screenSize.width / 10) * 3,
+          child: Text(templateInfo.size!, style: textStyle))),
     ],
   );
 }

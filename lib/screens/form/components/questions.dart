@@ -36,7 +36,7 @@ class _QuestionsState extends State<Questions> {
           Header(),
           Row(
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Row(children: <Widget>[
                   Container(
@@ -95,21 +95,7 @@ class _QuestionsState extends State<Questions> {
                     },
                     items: departamentTypeDropDownItemList,
                   )
-                ]),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.pushNamed(context, NEW_QUESTION_FORM);
-                  },
-                  icon: Icon(Icons.add),
-                  label: Text("New"),
-                  style: TextButton.styleFrom(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: defaultPadding * 1.5,
-                        vertical: defaultPadding /
-                            (Responsive.isMobile(context) ? 2 : 1),
-                      ),
-                      backgroundColor: primaryColor),
-                )
+                ])
               ]),
           SizedBox(
             height: 20,
@@ -118,6 +104,26 @@ class _QuestionsState extends State<Questions> {
             "Questions",
             style: TextStyle(
                 fontSize: 20, color: primaryColor, fontWeight: FontWeight.bold),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.pushNamed(context, NEW_TEMPLATE_FORM);
+                },
+                icon: Icon(Icons.add),
+                label: Text("Add New"),
+                style: TextButton.styleFrom(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: defaultPadding * 1.5,
+                      vertical: defaultPadding /
+                          (Responsive.isMobile(context) ? 2 : 1),
+                    ),
+                    backgroundColor: primaryColor),
+              )
+            ],
           ),
           SizedBox(
             width: double.infinity,
