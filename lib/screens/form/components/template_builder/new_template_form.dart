@@ -72,9 +72,8 @@ class _NewTemplateFormState extends State<NewTemplateForm> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Container(
-                                padding: EdgeInsets.all(15),
-                                width: _screen.width / 2,
+                              Flexible(
+                                flex: 4,
                                 child: TextField(
                                   onChanged: (value) {
                                     setState(() {
@@ -97,35 +96,36 @@ class _NewTemplateFormState extends State<NewTemplateForm> {
                                   ),
                                 ),
                               ),
-                              const SizedBox(
-                                width: 20,
-                              ),
                               Padding(
                                   padding: EdgeInsets.all(15),
                                   child: Text("Departament", style: textStyle)),
-                              const SizedBox(
-                                width: 20,
-                              ),
-                              DropdownButton<String>(
-                                icon: Icon(
-                                  // Add this
-                                  Icons.arrow_drop_down, // Add this
-                                  color: primaryColor, // Add this
-                                ),
-                                value: _departamentDropdownValue,
-                                style: const TextStyle(color: primaryColor),
-                                dropdownColor: Colors.white,
-                                underline: Container(
-                                  height: 2,
-                                  color: primaryColor,
-                                ),
-                                onChanged: (newValue) {
-                                  setState(() {
-                                    _departamentDropdownValue = newValue!;
-                                  });
-                                },
-                                items: departamentTypeDropDownItemList,
-                              )
+                              Flexible(
+                                  flex: 2,
+                                  child: Padding(
+                                      padding: EdgeInsets.all(15),
+                                      child: DropdownButton<String>(
+                                        isExpanded: true,
+                                        icon: Icon(
+                                          // Add this
+                                          Icons.arrow_drop_down, // Add this
+                                          color: primaryColor, // Add this
+                                        ),
+                                        value: _departamentDropdownValue,
+                                        style: const TextStyle(
+                                            color: primaryColor),
+                                        dropdownColor: Colors.white,
+                                        underline: Container(
+                                          height: 2,
+                                          color: primaryColor,
+                                        ),
+                                        onChanged: (newValue) {
+                                          setState(() {
+                                            _departamentDropdownValue =
+                                                newValue!;
+                                          });
+                                        },
+                                        items: departamentTypeDropDownItemList,
+                                      )))
                             ]),
                         horizontalDivider,
                         Theme(

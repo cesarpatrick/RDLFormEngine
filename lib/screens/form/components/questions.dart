@@ -111,7 +111,7 @@ class _QuestionsState extends State<Questions> {
             children: [
               ElevatedButton.icon(
                 onPressed: () {
-                  Navigator.pushNamed(context, NEW_TEMPLATE_FORM);
+                  Navigator.pushNamed(context, NEW_QUESTION_FORM);
                 },
                 icon: Icon(Icons.add),
                 label: Text("Add New"),
@@ -131,7 +131,7 @@ class _QuestionsState extends State<Questions> {
               data: Theme.of(context).copyWith(dividerColor: Colors.green),
               child: DataTable2(
                 columnSpacing: defaultPadding,
-                minWidth: 600,
+                dataRowHeight: 40,
                 columns: [
                   DataColumn(
                     label: Text(
@@ -148,7 +148,8 @@ class _QuestionsState extends State<Questions> {
                 ],
                 rows: List.generate(
                   demoRecentFiles.length,
-                  (index) => templatesDataRow(demoRecentFiles[index]),
+                  (index) => templatesDataRow(
+                      demoRecentFiles[index], _screen, context),
                 ),
               ),
             ),
@@ -159,26 +160,29 @@ class _QuestionsState extends State<Questions> {
   }
 }
 
-DataRow templatesDataRow(ListQuestions templateInfo) {
+DataRow templatesDataRow(
+    ListQuestions questionInfo, Size screenSize, BuildContext context) {
   return DataRow(
     cells: [
-      DataCell(
-        Row(
+      DataCell(Container(
+        width: (screenSize.width / 10) * 3,
+        child: Row(
           children: [
-            SvgPicture.asset(
-              templateInfo.icon!,
-              height: 30,
-              width: 30,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-              child: Text(templateInfo.title!, style: textStyle),
+            if (Responsive.isDesktop(context))
+              SvgPicture.asset(
+                questionInfo.icon!,
+                height: 30,
+                width: 30,
+              ),
+            SizedBox(width: 5),
+            Expanded(
+              child: Text(questionInfo.title!, style: textStyle),
             ),
           ],
         ),
-      ),
-      DataCell(Text(templateInfo.date!, style: textStyle)),
-      DataCell(Text(templateInfo.size!, style: textStyle)),
+      )),
+      DataCell(Expanded(child: Text(questionInfo.date!, style: textStyle))),
+      DataCell(Expanded(child: Text(questionInfo.size!, style: textStyle))),
     ],
   );
 }

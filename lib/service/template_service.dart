@@ -22,7 +22,23 @@ class TemplateService {
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
-      throw Exception('Failed to load trucks');
+      throw Exception('Failed to load the templates');
+    }
+  }
+
+  Future<Template> getTemplatesById(String id) async {
+    final response = await http.post(Uri.parse(
+        SERVER_URL + TEMPLATE_URL + id + "/" + authKeyService.getAuthKey()));
+
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+
+      return Template.fromJson(jsonDecode(response.body));
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load the template');
     }
   }
 }

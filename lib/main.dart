@@ -1,7 +1,7 @@
 import 'package:admin/constants.dart';
 import 'package:admin/controllers/MenuController.dart';
 import 'package:admin/screens/auth/auth.dart';
-import 'package:admin/screens/form/components/form_builder/new_question_form.dart';
+import 'package:admin/screens/form/components/question_builder/new_question_form.dart';
 import 'package:admin/screens/form/main_screen.dart';
 import 'package:admin/service/auth_key_service.dart';
 import 'package:flutter/material.dart';

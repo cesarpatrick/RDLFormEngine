@@ -136,8 +136,7 @@ class _TemplatesState extends State<Templates> {
               data: Theme.of(context).copyWith(dividerColor: Colors.green),
               child: DataTable2(
                 columnSpacing: defaultPadding,
-                minWidth: 600,
-                dataRowHeight: 50,
+                dataRowHeight: 40,
                 columns: [
                   DataColumn(
                     label: Text(
@@ -154,7 +153,8 @@ class _TemplatesState extends State<Templates> {
                 ],
                 rows: List.generate(
                   demoRecentFiles.length,
-                  (index) => templatesDataRow(demoRecentFiles[index], _screen),
+                  (index) => templatesDataRow(
+                      demoRecentFiles[index], _screen, context),
                 ),
               ),
             ),
@@ -165,31 +165,29 @@ class _TemplatesState extends State<Templates> {
   }
 }
 
-DataRow templatesDataRow(ListTemplate templateInfo, Size screenSize) {
+DataRow templatesDataRow(
+    ListTemplate templateInfo, Size screenSize, BuildContext context) {
   return DataRow(
     cells: [
       DataCell(Container(
         width: (screenSize.width / 10) * 3,
         child: Row(
           children: [
-            SvgPicture.asset(
-              templateInfo.icon!,
-              height: 30,
-              width: 30,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+            if (Responsive.isDesktop(context))
+              SvgPicture.asset(
+                templateInfo.icon!,
+                height: 30,
+                width: 30,
+              ),
+            SizedBox(width: 2),
+            Expanded(
               child: Text(templateInfo.title!, style: textStyle),
             ),
           ],
         ),
       )),
-      DataCell(Container(
-          width: (screenSize.width / 10) * 3,
-          child: Text(templateInfo.date!, style: textStyle))),
-      DataCell(Container(
-          width: (screenSize.width / 10) * 3,
-          child: Text(templateInfo.size!, style: textStyle))),
+      DataCell(Expanded(child: Text(templateInfo.date!, style: textStyle))),
+      DataCell(Expanded(child: Text(templateInfo.size!, style: textStyle))),
     ],
   );
 }

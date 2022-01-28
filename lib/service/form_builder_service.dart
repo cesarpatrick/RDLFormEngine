@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 import 'package:admin/models/Question.dart';
-import 'package:admin/screens/form/components/form_builder/checkbox_input_form.dart';
-import 'package:admin/screens/form/components/form_builder/input_text_form.dart';
-import 'package:admin/screens/form/components/form_builder/radio_button_form.dart';
-import 'package:admin/screens/form/components/form_builder/select_input_form.dart';
-import 'package:admin/screens/form/components/form_builder/switch_input_form.dart';
-import 'package:admin/screens/form/components/form_builder/text_area_input_form.dart';
+import 'package:admin/screens/form/components/question_builder/checkbox_input_form.dart';
+import 'package:admin/screens/form/components/question_builder/input_text_form.dart';
+import 'package:admin/screens/form/components/question_builder/radio_button_form.dart';
+import 'package:admin/screens/form/components/question_builder/select_input_form.dart';
+import 'package:admin/screens/form/components/question_builder/switch_input_form.dart';
+import 'package:admin/screens/form/components/question_builder/text_area_input_form.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';

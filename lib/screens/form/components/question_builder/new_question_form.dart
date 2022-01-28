@@ -96,58 +96,56 @@ class _NewQuestionFormState extends State<NewQuestionForm> {
                             width: 20,
                           ),
                           Text("Departament", style: textStyle),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          DropdownButton<String>(
-                            icon: Icon(
-                              // Add this
-                              Icons.arrow_drop_down, // Add this
-                              color: primaryColor, // Add this
-                            ),
-                            value: _departamentDropdownValue,
-                            style: const TextStyle(color: primaryColor),
-                            dropdownColor: Colors.white,
-                            underline: Container(
-                              height: 2,
-                              color: primaryColor,
-                            ),
-                            onChanged: (newValue) {
-                              setState(() {
-                                _validateForm();
-                                _departamentDropdownValue = newValue!;
-                              });
-                            },
-                            items: departamentTypeDropDownItemList,
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
+                          Flexible(
+                              flex: 2,
+                              child: DropdownButton<String>(
+                                isExpanded: true,
+                                icon: Icon(
+                                  // Add this
+                                  Icons.arrow_drop_down, // Add this
+                                  color: primaryColor, // Add this
+                                ),
+                                value: _departamentDropdownValue,
+                                style: const TextStyle(color: primaryColor),
+                                dropdownColor: Colors.white,
+                                underline: Container(
+                                  height: 2,
+                                  color: primaryColor,
+                                ),
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    _validateForm();
+                                    _departamentDropdownValue = newValue!;
+                                  });
+                                },
+                                items: departamentTypeDropDownItemList,
+                              )),
+                          SizedBox(width: 5),
                           Text("Input Type", style: textStyle),
-                          const SizedBox(
-                            width: 42,
-                          ),
-                          DropdownButton<String>(
-                            icon: Icon(
-                              // Add this
-                              Icons.arrow_drop_down, // Add this
-                              color: primaryColor, // Add this
-                            ),
-                            value: _typeDropdownValue,
-                            style: const TextStyle(color: primaryColor),
-                            dropdownColor: Colors.white,
-                            underline: Container(
-                              height: 2,
-                              color: primaryColor,
-                            ),
-                            onChanged: (newValue) {
-                              setState(() {
-                                _validateForm();
-                                _typeDropdownValue = newValue!;
-                              });
-                            },
-                            items: inputTypeDropDownItemList,
-                          ),
+                          Flexible(
+                              flex: 2,
+                              child: DropdownButton<String>(
+                                isExpanded: true,
+                                icon: Icon(
+                                  // Add this
+                                  Icons.arrow_drop_down, // Add this
+                                  color: primaryColor, // Add this
+                                ),
+                                value: _typeDropdownValue,
+                                style: const TextStyle(color: primaryColor),
+                                dropdownColor: Colors.white,
+                                underline: Container(
+                                  height: 2,
+                                  color: primaryColor,
+                                ),
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    _validateForm();
+                                    _typeDropdownValue = newValue!;
+                                  });
+                                },
+                                items: inputTypeDropDownItemList,
+                              )),
                           IconButton(
                             tooltip: "Help",
                             color: Colors.red,

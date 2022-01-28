@@ -191,8 +191,8 @@ class _TemplateFormBuilderState extends State<TemplateFormBuilder> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Container(
-                    width: _screen.width / 6,
+                Flexible(
+                    flex: 4,
                     child: Center(
                         child: TextField(
                             decoration: InputDecoration(
@@ -220,33 +220,34 @@ class _TemplateFormBuilderState extends State<TemplateFormBuilder> {
                         ),
                       ),
                     )))),
-                const SizedBox(
-                  width: 20,
-                ),
-                Text("Departament", style: textStyle),
-                const SizedBox(
-                  width: 20,
-                ),
-                DropdownButton<String>(
-                  icon: Icon(
-                    // Add this
-                    Icons.arrow_drop_down, // Add this
-                    color: primaryColor, // Add this
-                  ),
-                  value: _departamentDropdownValue,
-                  style: const TextStyle(color: primaryColor),
-                  dropdownColor: Colors.white,
-                  underline: Container(
-                    height: 2,
-                    color: primaryColor,
-                  ),
-                  onChanged: (newValue) {
-                    setState(() {
-                      _departamentDropdownValue = newValue!;
-                    });
-                  },
-                  items: departamentTypeDropDownItemList,
-                )
+                Padding(
+                    padding: EdgeInsets.all(15),
+                    child: Text("Departament", style: textStyle)),
+                Flexible(
+                    flex: 2,
+                    child: Padding(
+                        padding: EdgeInsets.all(15),
+                        child: DropdownButton<String>(
+                          isExpanded: true,
+                          icon: Icon(
+                            // Add this
+                            Icons.arrow_drop_down, // Add this
+                            color: primaryColor, // Add this
+                          ),
+                          value: _departamentDropdownValue,
+                          style: const TextStyle(color: primaryColor),
+                          dropdownColor: Colors.white,
+                          underline: Container(
+                            height: 2,
+                            color: primaryColor,
+                          ),
+                          onChanged: (newValue) {
+                            setState(() {
+                              _departamentDropdownValue = newValue!;
+                            });
+                          },
+                          items: departamentTypeDropDownItemList,
+                        )))
               ]),
         ),
         Container(
