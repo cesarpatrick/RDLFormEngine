@@ -1,5 +1,6 @@
 import 'package:admin/constants.dart';
 import 'package:admin/models/Question.dart';
+import 'package:admin/service/question_service.dart';
 import 'package:flutter/material.dart';
 
 import 'question_preview_input.dart';
@@ -7,7 +8,9 @@ import 'question_preview_input.dart';
 class TextAreaInputForm extends StatefulWidget {
   final String name;
   final String? departament;
-  const TextAreaInputForm({Key? key, required this.name, this.departament})
+  final Question? question;
+  const TextAreaInputForm(
+      {Key? key, required this.name, this.departament, this.question})
       : super(key: key);
 
   @override
@@ -28,12 +31,21 @@ class _TextAreaInputFormState extends State<TextAreaInputForm> {
   TextEditingController labelController = TextEditingController();
   TextEditingController initialValueController = TextEditingController();
 
+  QuestionService questionService = QuestionService();
+
   bool _validate = false;
 
   @override
   void initState() {
     super.initState();
     initialValueSwitch = false;
+
+    if (widget.question!.id != null && widget.question!.id != 0) {
+      labelController.text = widget.question!.field!.label;
+      initialValueController.text = widget.question!.field!.value;
+      initialValueSwitch = widget.question!.field!.required!;
+      question = widget.question!;
+    }
   }
 
   @override
@@ -47,17 +59,26 @@ class _TextAreaInputFormState extends State<TextAreaInputForm> {
   void _updateQuestion() {
     QuestionField field = QuestionField(
         key: "key",
-        type: "Input",
+        type: "TextArea",
         label: labelController.text,
         value: initialValueController.text,
         required: initialValueSwitch);
 
-    Question question = Question(
-        field: field, name: widget.name, departament: widget.departament);
+    int? fieldId = widget.question!.field!.id;
 
-    print(question.toJson());
+    if (fieldId != null && fieldId != 0) {
+      field.id = fieldId;
+    }
 
-    this.question = question;
+    this.question.field = field;
+    this.question.name = widget.name;
+    this.question.departament = widget.departament;
+
+    print(this.question.toJson());
+  }
+
+  void _save() {
+    questionService.save(this.question);
   }
 
   @override
@@ -153,7 +174,10 @@ class _TextAreaInputFormState extends State<TextAreaInputForm> {
                                 ? _validate = true
                                 : _validate = false;
 
-                            if (_validate == false) {}
+                            if (_validate == false) {
+                              _save();
+                              Navigator.of(context).pop(this.question);
+                            }
                           })
                         },
                         style: ButtonStyle(

@@ -12,14 +12,24 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 
 class FormBuilderService {
-  Widget getFormByInputType(String name, String type, String departament) {
+  Widget getFormByInputType(
+      String name, String type, String departament, Question? question) {
+    if (question!.id != null && question.id != 0) {
+      question.name = name;
+      question.field!.type = type;
+      question.departament = departament;
+    }
+
     switch (type) {
       case INPUT_TEXT:
-        return InputTextForm(name: name, departament: departament);
+        return InputTextForm(
+            name: name, departament: departament, question: question);
       case TEXT_AREA_INPUT:
-        return TextAreaInputForm(name: name, departament: departament);
+        return TextAreaInputForm(
+            name: name, departament: departament, question: question);
       case SWITCH:
-        return SwitchInputForm(name: name, departament: departament);
+        return SwitchInputForm(
+            name: name, departament: departament, question: question);
       case CHECKBOX_INPUT:
         return CheckboxInputForm(name: name, departament: departament);
       case RADIO_BUTTON_INPUT:

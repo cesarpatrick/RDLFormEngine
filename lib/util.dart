@@ -1,5 +1,6 @@
 import 'package:admin/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Util {
   static List<DropdownMenuItem<String>> getInputDropdownMenu() {
@@ -31,5 +32,17 @@ class Util {
         DropdownMenuItem<String>(value: OPERATIONS, child: Text(OPERATIONS)));
     list.add(DropdownMenuItem<String>(value: WORKSHOP, child: Text(WORKSHOP)));
     return list;
+  }
+
+  static String formattDate(String date) {
+    if (date.isNotEmpty) {
+      DateTime tempDate = new DateFormat("yyyy-MM-dd hh:mm:ss").parse(date);
+
+      String finalDate = DateFormat("dd-MM-yyyy").format(tempDate);
+
+      return finalDate;
+    } else {
+      return "";
+    }
   }
 }

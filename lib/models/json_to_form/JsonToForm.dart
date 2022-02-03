@@ -3,7 +3,6 @@ import 'package:admin/constants.dart';
 import 'package:admin/models/Template.dart';
 import 'package:flutter/material.dart';
 
-import '../Question.dart';
 import 'simple_checkbox.dart';
 import 'simple_date.dart';
 import 'simple_radios.dart';
@@ -196,8 +195,8 @@ class _CoreFormState extends State<JsonToForm> {
   @override
   Widget build(BuildContext context) {
     formGeneral = json.decode(widget.form!);
-    Template template = Template.fromJson(formGeneral);
-    List<Question> q = template.questions;
+    // Template template = Template.fromJson(formGeneral);
+    // List<Question> q = template.questions;
     return Form(
       autovalidateMode:
           formGeneral['autoValidated'] ?? AutovalidateMode.disabled,

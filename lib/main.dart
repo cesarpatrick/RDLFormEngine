@@ -8,9 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import 'screens/form/components/questions.dart';
+import 'models/Question.dart';
+import 'screens/form/components/questions_screen.dart';
 import 'screens/form/components/template_builder/new_template_form.dart';
-import 'screens/form/components/templates.dart';
+import 'screens/form/components/templates_screen.dart';
 import 'screens/main/page_not_found_screen.dart';
 
 void main() {
@@ -54,7 +55,7 @@ class MyApp extends StatelessWidget {
                     ),
                   ],
                   child: Container(
-                    child: MainScreen(widget: Templates()),
+                    child: MainScreen(widget: TemplatesScreen()),
                   )),
           QUESTIONS_ROUTE: (context) => MultiProvider(
                   providers: [
@@ -63,7 +64,7 @@ class MyApp extends StatelessWidget {
                     ),
                   ],
                   child: Container(
-                    child: MainScreen(widget: Questions()),
+                    child: MainScreen(widget: QuestionsScreen()),
                   )),
           NEW_QUESTION_FORM: (context) => MultiProvider(
                   providers: [
@@ -72,7 +73,10 @@ class MyApp extends StatelessWidget {
                     ),
                   ],
                   child: Container(
-                    child: MainScreen(widget: NewQuestionForm()),
+                    child: MainScreen(
+                        widget: NewQuestionForm(
+                            question: ModalRoute.of(context)!.settings.arguments
+                                as Question)),
                   )),
           NEW_TEMPLATE_FORM: (context) => MultiProvider(
                   providers: [

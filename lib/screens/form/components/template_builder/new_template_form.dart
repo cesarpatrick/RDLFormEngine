@@ -46,8 +46,6 @@ class _NewTemplateFormState extends State<NewTemplateForm> {
 
   @override
   Widget build(BuildContext context) {
-    Size _screen = MediaQuery.of(context).size;
-
     return Container(
         color: Colors.white,
         child: SingleChildScrollView(

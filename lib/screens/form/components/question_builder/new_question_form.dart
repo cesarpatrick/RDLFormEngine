@@ -1,4 +1,5 @@
 import 'package:admin/constants.dart';
+import 'package:admin/models/Question.dart';
 import 'package:admin/screens/main/components/header.dart';
 import 'package:admin/service/form_builder_service.dart';
 import 'package:admin/util.dart';
@@ -7,7 +8,8 @@ import 'package:flutter/material.dart';
 import 'inputs_info_modal.dart';
 
 class NewQuestionForm extends StatefulWidget {
-  const NewQuestionForm({Key? key}) : super(key: key);
+  final Question? question;
+  const NewQuestionForm({Key? key, this.question}) : super(key: key);
 
   @override
   _NewQuestionFormState createState() => _NewQuestionFormState();
@@ -22,6 +24,7 @@ class _NewQuestionFormState extends State<NewQuestionForm> {
 
   bool _validate = false;
 
+  String nameValue = "";
   String _typeDropdownValue = "";
   String _departamentDropdownValue = "";
 
@@ -29,6 +32,11 @@ class _NewQuestionFormState extends State<NewQuestionForm> {
   void initState() {
     super.initState();
     initialValueSwitch = false;
+    if (widget.question!.id != null && widget.question!.id != 0) {
+      nameController.text = widget.question!.name;
+      _departamentDropdownValue = widget.question!.departament!;
+      _typeDropdownValue = widget.question!.field!.type;
+    }
   }
 
   @override
@@ -75,7 +83,9 @@ class _NewQuestionFormState extends State<NewQuestionForm> {
                         Padding(
                           padding: const EdgeInsets.all(15),
                           child: TextField(
-                            onChanged: (value) {},
+                            onChanged: (value) {
+                              setState(() {});
+                            },
                             controller: nameController,
                             decoration: InputDecoration(
                               filled: true,
@@ -96,56 +106,58 @@ class _NewQuestionFormState extends State<NewQuestionForm> {
                             width: 20,
                           ),
                           Text("Departament", style: textStyle),
-                          Flexible(
-                              flex: 2,
-                              child: DropdownButton<String>(
-                                isExpanded: true,
-                                icon: Icon(
-                                  // Add this
-                                  Icons.arrow_drop_down, // Add this
-                                  color: primaryColor, // Add this
-                                ),
-                                value: _departamentDropdownValue,
-                                style: const TextStyle(color: primaryColor),
-                                dropdownColor: Colors.white,
-                                underline: Container(
-                                  height: 2,
-                                  color: primaryColor,
-                                ),
-                                onChanged: (newValue) {
-                                  setState(() {
-                                    _validateForm();
-                                    _departamentDropdownValue = newValue!;
-                                  });
-                                },
-                                items: departamentTypeDropDownItemList,
-                              )),
-                          SizedBox(width: 5),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          DropdownButton<String>(
+                            icon: Icon(
+                              // Add this
+                              Icons.arrow_drop_down, // Add this
+                              color: primaryColor, // Add this
+                            ),
+                            value: _departamentDropdownValue,
+                            style: const TextStyle(color: primaryColor),
+                            dropdownColor: Colors.white,
+                            underline: Container(
+                              height: 2,
+                              color: primaryColor,
+                            ),
+                            onChanged: (newValue) {
+                              setState(() {
+                                _validateForm();
+                                _departamentDropdownValue = newValue!;
+                              });
+                            },
+                            items: departamentTypeDropDownItemList,
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
                           Text("Input Type", style: textStyle),
-                          Flexible(
-                              flex: 2,
-                              child: DropdownButton<String>(
-                                isExpanded: true,
-                                icon: Icon(
-                                  // Add this
-                                  Icons.arrow_drop_down, // Add this
-                                  color: primaryColor, // Add this
-                                ),
-                                value: _typeDropdownValue,
-                                style: const TextStyle(color: primaryColor),
-                                dropdownColor: Colors.white,
-                                underline: Container(
-                                  height: 2,
-                                  color: primaryColor,
-                                ),
-                                onChanged: (newValue) {
-                                  setState(() {
-                                    _validateForm();
-                                    _typeDropdownValue = newValue!;
-                                  });
-                                },
-                                items: inputTypeDropDownItemList,
-                              )),
+                          const SizedBox(
+                            width: 42,
+                          ),
+                          DropdownButton<String>(
+                            icon: Icon(
+                              // Add this
+                              Icons.arrow_drop_down, // Add this
+                              color: primaryColor, // Add this
+                            ),
+                            value: _typeDropdownValue,
+                            style: const TextStyle(color: primaryColor),
+                            dropdownColor: Colors.white,
+                            underline: Container(
+                              height: 2,
+                              color: primaryColor,
+                            ),
+                            onChanged: (newValue) {
+                              setState(() {
+                                _validateForm();
+                                _typeDropdownValue = newValue!;
+                              });
+                            },
+                            items: inputTypeDropDownItemList,
+                          ),
                           IconButton(
                             tooltip: "Help",
                             color: Colors.red,
@@ -161,8 +173,11 @@ class _NewQuestionFormState extends State<NewQuestionForm> {
                           )
                         ]),
                         horizontalDivider,
-                        builderService.getFormByInputType(nameController.text,
-                            _typeDropdownValue, _departamentDropdownValue)
+                        builderService.getFormByInputType(
+                            nameController.text,
+                            _typeDropdownValue,
+                            _departamentDropdownValue,
+                            widget.question!)
                       ],
                     )))
               ],

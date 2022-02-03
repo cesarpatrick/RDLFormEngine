@@ -4,47 +4,35 @@ class Variables {
   }
 
   static String beta() {
-    return 'https://beta.rdltr.com/';
+    return 'http://localhost:8880/RDLWebService/ws/';
   }
 
   static String baseUrl() {
-    return prod();
+    return beta();
     // return beta();
   }
 
   static String getAuthUrl() {
-    return baseUrl() + 'rdl-report-ws/ws/auth';
+    return baseUrl() + 'auth';
   }
 
-  static String getLocationUrl() {
-    return baseUrl() + 'rdl-pictures-ws2/ws/location';
+  //QUESTION FORM URLS
+
+  static String getQuestionSaveUrl() {
+    return baseUrl() + 'formQuestion/save/';
   }
 
-  static String getUploadUrl() {
-    return baseUrl() + 'rdl-pictures-ws2/ws/upload';
+  static String getQuestionListUrl() {
+    return baseUrl() + 'formQuestion/list/';
   }
 
-  static String getRunUrl() {
-    return baseUrl() + 'rdl-pictures-ws2/ws/run';
+  //TEMPLATES FORM URLS
+
+  static String getTemplateSaveUrl() {
+    return baseUrl() + 'formTemplate/save/';
   }
 
-  static String getTruckUrl() {
-    return baseUrl() + 'rdl-pictures-ws2/ws/trucks';
-  }
-
-  static String getRosterUrl() {
-    return baseUrl() + 'rdl-pictures-ws2/ws/roster';
-  }
-
-  static String getReportUrl() {
-    return baseUrl() + 'rdl-pictures-ws2/ws/report';
-  }
-
-  static String getImageEndpoint(String fileId, String uz) {
-    return baseUrl() +
-        'rdlops/rubbishdirectops/DocumentManager?a=get-file&fid=' +
-        fileId +
-        '&uz=' +
-        uz;
+  static String getTemplateListUrl() {
+    return baseUrl() + 'formTemplate/list/';
   }
 }

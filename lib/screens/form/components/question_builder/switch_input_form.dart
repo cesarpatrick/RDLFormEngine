@@ -1,5 +1,6 @@
 import 'package:admin/constants.dart';
 import 'package:admin/models/Question.dart';
+import 'package:admin/service/question_service.dart';
 import 'package:flutter/material.dart';
 
 import 'question_preview_input.dart';
@@ -7,7 +8,9 @@ import 'question_preview_input.dart';
 class SwitchInputForm extends StatefulWidget {
   final String name;
   final String? departament;
-  const SwitchInputForm({Key? key, required this.name, this.departament})
+  final Question? question;
+  const SwitchInputForm(
+      {Key? key, required this.name, this.departament, this.question})
       : super(key: key);
 
   @override
@@ -23,10 +26,13 @@ class _SwitchInputFormState extends State<SwitchInputForm> {
         value: false,
       ),
       name: "");
+
   bool initialValueRequiredSwitch = false;
   bool initialValueSelectedSwitch = false;
+
   TextEditingController labelController = TextEditingController();
-  TextEditingController initialValueController = TextEditingController();
+
+  QuestionService questionService = QuestionService();
 
   bool _validate = false;
 
@@ -34,13 +40,23 @@ class _SwitchInputFormState extends State<SwitchInputForm> {
   void initState() {
     super.initState();
     initialValueRequiredSwitch = false;
+
+    if (widget.question!.id != null && widget.question!.id != 0) {
+      labelController.text = widget.question!.field!.label;
+
+      if (widget.question!.field!.value == "true") {
+        initialValueSelectedSwitch = true;
+      }
+
+      initialValueRequiredSwitch = widget.question!.field!.required!;
+      question = widget.question!;
+    }
   }
 
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
     labelController.dispose();
-    initialValueController.dispose();
     super.dispose();
   }
 
@@ -52,18 +68,29 @@ class _SwitchInputFormState extends State<SwitchInputForm> {
         value: initialValueSelectedSwitch.toString(),
         required: initialValueRequiredSwitch);
 
-    Question question = Question(
-        field: field, name: widget.name, departament: widget.departament);
+    int? fieldId = widget.question!.field!.id;
+
+    if (fieldId != null && fieldId != 0) {
+      field.id = fieldId;
+    }
+
+    this.question.field = field;
+    this.question.name = widget.name;
+    this.question.departament = widget.departament;
+
+    print(this.question.toJson());
 
     print(question.toJson());
 
     this.question = question;
   }
 
+  void _save() {
+    questionService.save(this.question);
+  }
+
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
-
     return Container(
         child: Column(
       children: [
@@ -155,7 +182,10 @@ class _SwitchInputFormState extends State<SwitchInputForm> {
                                 ? _validate = true
                                 : _validate = false;
 
-                            if (_validate == false) {}
+                            if (_validate == false) {
+                              _save();
+                              Navigator.of(context).pop(this.question);
+                            }
                           })
                         },
                         style: ButtonStyle(

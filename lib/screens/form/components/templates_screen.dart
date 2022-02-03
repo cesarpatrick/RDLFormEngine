@@ -8,16 +8,16 @@ import 'package:flutter_svg/svg.dart';
 import '../../../constants.dart';
 import '../../../responsive.dart';
 
-class Templates extends StatefulWidget {
-  const Templates({
+class TemplatesScreen extends StatefulWidget {
+  const TemplatesScreen({
     Key? key,
   }) : super(key: key);
 
   @override
-  _TemplatesState createState() => _TemplatesState();
+  _TemplatesScreenState createState() => _TemplatesScreenState();
 }
 
-class _TemplatesState extends State<Templates> {
+class _TemplatesScreenState extends State<TemplatesScreen> {
   List<DropdownMenuItem<String>> departamentTypeDropDownItemList =
       Util.getDepartamentsDropdownMenu();
 
@@ -38,7 +38,7 @@ class _TemplatesState extends State<Templates> {
           Header(),
           Row(
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Row(children: <Widget>[
                   Container(
@@ -136,7 +136,7 @@ class _TemplatesState extends State<Templates> {
               data: Theme.of(context).copyWith(dividerColor: Colors.green),
               child: DataTable2(
                 columnSpacing: defaultPadding,
-                dataRowHeight: 40,
+                dataRowHeight: 60,
                 columns: [
                   DataColumn(
                     label: Text(
@@ -171,23 +171,25 @@ DataRow templatesDataRow(
     cells: [
       DataCell(Container(
         width: (screenSize.width / 10) * 3,
-        child: Row(
-          children: [
-            if (Responsive.isDesktop(context))
-              SvgPicture.asset(
-                templateInfo.icon!,
-                height: 30,
-                width: 30,
-              ),
-            SizedBox(width: 2),
-            Expanded(
-              child: Text(templateInfo.title!, style: textStyle),
+        child: Row(children: [
+          if (Responsive.isDesktop(context))
+            SvgPicture.asset(
+              templateInfo.icon!,
+              height: 30,
+              width: 30,
             ),
-          ],
-        ),
+          SizedBox(width: 5),
+          Expanded(
+            child: Text(templateInfo.title!, style: textStyle),
+          ),
+        ]),
       )),
-      DataCell(Expanded(child: Text(templateInfo.date!, style: textStyle))),
-      DataCell(Expanded(child: Text(templateInfo.size!, style: textStyle))),
+      DataCell(Row(children: [
+        Expanded(child: Text(templateInfo.date!, style: textStyle))
+      ])),
+      DataCell(Row(children: [
+        Expanded(child: Text(templateInfo.size!, style: textStyle))
+      ])),
     ],
   );
 }

@@ -50,9 +50,3 @@ const String IT = "INFORMATION TECHNOLOGY";
 const String HR = "HUMAN RESOURCES";
 const String WORKSHOP = "WORKSHOP";
 const String OPERATIONS = "OPERATIONS";
-
-//SERVER URL
-const String SERVER_URL = "https://rdltr.com:8999/rdl-report-ws/ws/cache/";
-
-//ENDPOINTS
-const String TEMPLATE_LIST = "formTemplate/list/";

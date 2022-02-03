@@ -1,16 +1,27 @@
 import 'dart:convert';
 
+import 'package:admin/util.dart';
+
 Question jsonFormFromJson(String str) => Question.fromJson(json.decode(str));
 
 String jsonFormToJson(Question data) => json.encode(data.toJson());
 
 class Question {
-  Question({id, required this.field, this.departament, required this.name});
+  Question(
+      {this.id,
+      required this.field,
+      this.departament,
+      required this.name,
+      this.dateCreated,
+      this.dateUpdated,
+      this.userCreated});
 
   int? id;
   QuestionField? field;
   String? departament;
   String name;
+  String? dateUpdated, dateCreated;
+  int? userCreated;
 
   factory Question.fromJson(Map<String, dynamic> json) => Question(
         id: json["id"],
@@ -19,18 +30,25 @@ class Question {
         field: json["field"] == null
             ? null
             : QuestionField.fromJson(json["field"]),
+        dateUpdated: json["dateUpdated"],
+        dateCreated: Util.formattDate(json["dateCreated"]),
+        userCreated: json["userCreated"],
       );
 
   Map<String, dynamic> toJson() => {
-        "id": this.id,
-        "name": this.name,
-        "departament": this.departament,
+        "id": id,
+        "name": name,
+        "departament": departament,
         "field": field!.toJson(),
+        "dateCreated": dateCreated,
+        "dateUpdated": dateUpdated,
+        "userCreated": userCreated
       };
 }
 
 class QuestionField {
   QuestionField({
+    this.id,
     required this.key,
     required this.type,
     required this.label,
@@ -40,6 +58,7 @@ class QuestionField {
     this.items,
   });
 
+  int? id;
   String key;
   String type;
   String label;
@@ -49,9 +68,10 @@ class QuestionField {
   List<QuestionFieldItem>? items;
 
   factory QuestionField.fromJson(Map<String, dynamic> json) => QuestionField(
-        key: json["key"],
-        type: json["type"],
-        label: json["label"],
+        id: json["id"],
+        key: json["key"] == null ? "" : json["key"],
+        type: json["type"] == null ? "" : json["type"],
+        label: json["label"] == null ? "" : json["label"],
         placeholder: json["placeholder"] == null ? null : json["placeholder"],
         required: json["required"] == null ? null : json["required"],
         value: json["value"],
@@ -62,7 +82,8 @@ class QuestionField {
       );
 
   Map<String, dynamic> toJson() => {
-        'key': key,
+        "id": id,
+        "key": key,
         "type": type,
         "label": label,
         "placeholder": placeholder == null ? "" : placeholder,

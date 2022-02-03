@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:admin/models/WebUser.dart';
 import 'package:admin/models/Variables.dart';
-import 'package:admin/screens/form/components/templates.dart';
+import 'package:admin/screens/form/components/templates_screen.dart';
 import 'package:admin/screens/form/main_screen.dart';
 import 'package:admin/service/auth_key_service.dart';
 import 'package:admin/service/user_service.dart';
@@ -208,7 +208,7 @@ class _AuthState extends State<Auth> {
   void goToHome(String value) {
     Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (context) => MainScreen(
-              widget: Templates(),
+              widget: TemplatesScreen(),
             )));
   }
 
