@@ -221,8 +221,8 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
                       onPressed: () {
                         Navigator.pushNamed(context, NEW_QUESTION_FORM,
                             arguments: Question(
-                                field:
-                                    QuestionField(key: "", type: "", label: ""),
+                                field: QuestionField(
+                                    key: "", type: "", label: "", items: []),
                                 name: ""));
                       },
                       icon: Icon(Icons.add),

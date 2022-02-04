@@ -31,11 +31,14 @@ class FormBuilderService {
         return SwitchInputForm(
             name: name, departament: departament, question: question);
       case CHECKBOX_INPUT:
-        return CheckboxInputForm(name: name, departament: departament);
+        return CheckboxInputForm(
+            name: name, departament: departament, question: question);
       case RADIO_BUTTON_INPUT:
-        return RadioButtonForm(name: name, departament: departament);
+        return RadioButtonForm(
+            name: name, departament: departament, question: question);
       case SELECT_INPUT:
-        return SelectInputForm(name: name, departament: departament);
+        return SelectInputForm(
+            name: name, departament: departament, question: question);
       default:
         return Container();
     }
@@ -98,7 +101,10 @@ class FormBuilderService {
 
     list.add(DropdownMenuItem<String>(value: "", child: Text("")));
 
-    if (question.field!.value != null && question.field!.value != "") {
+    if (question.field!.value != null &&
+        question.field!.value != "" &&
+        question.field!.items != null &&
+        question.field!.items!.length > 0) {
       _departamentDropdownValue = question.field!.value;
     }
 

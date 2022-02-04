@@ -135,7 +135,7 @@ class _NewQuestionFormState extends State<NewQuestionForm> {
                           ),
                           Text("Input Type", style: textStyle),
                           const SizedBox(
-                            width: 42,
+                            width: 5,
                           ),
                           DropdownButton<String>(
                             icon: Icon(

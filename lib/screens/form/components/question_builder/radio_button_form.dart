@@ -1,5 +1,6 @@
 import 'package:admin/constants.dart';
 import 'package:admin/models/Question.dart';
+import 'package:admin/service/question_service.dart';
 import 'package:flutter/material.dart';
 
 import 'question_preview_input.dart';
@@ -7,7 +8,9 @@ import 'question_preview_input.dart';
 class RadioButtonForm extends StatefulWidget {
   final String name;
   final String? departament;
-  const RadioButtonForm({Key? key, required this.name, this.departament})
+  final Question? question;
+  const RadioButtonForm(
+      {Key? key, required this.name, this.departament, this.question})
       : super(key: key);
 
   @override
@@ -29,6 +32,8 @@ class _RadioButtonFormState extends State<RadioButtonForm> {
   bool _validateItemLabel = false;
   bool _validateItemValue = false;
 
+  QuestionService questionService = QuestionService();
+
   Question question = Question(
       field: QuestionField(
         key: "",
@@ -44,6 +49,14 @@ class _RadioButtonFormState extends State<RadioButtonForm> {
   void initState() {
     super.initState();
     initialValueRequiredSwitch = false;
+
+    if (widget.question!.id != null && widget.question!.id != 0) {
+      labelController.text = widget.question!.field!.label;
+      initialValueController.text = widget.question!.field!.value;
+      initialValueRequiredSwitch = widget.question!.field!.required!;
+      items = widget.question!.field!.items!;
+      question = widget.question!;
+    }
   }
 
   @override
@@ -63,12 +76,17 @@ class _RadioButtonFormState extends State<RadioButtonForm> {
         required: initialValueRequiredSwitch,
         items: items);
 
-    Question question = Question(
-        field: field, name: widget.name, departament: widget.departament);
+    int? fieldId = widget.question!.field!.id;
 
-    print(question.toJson());
+    if (fieldId != null && fieldId != 0) {
+      field.id = fieldId;
+    }
 
-    this.question = question;
+    field.items = items;
+    this.question.field = field;
+    this.question.name = widget.name;
+    this.question.departament = widget.departament;
+    print(this.question.toJson());
 
     setState(() {});
   }
@@ -86,6 +104,10 @@ class _RadioButtonFormState extends State<RadioButtonForm> {
     valueItemController.text = "";
 
     _updateQuestion();
+  }
+
+  void _save() {
+    questionService.save(this.question);
   }
 
   @override
@@ -308,7 +330,10 @@ class _RadioButtonFormState extends State<RadioButtonForm> {
                               ? _validateLabel = true
                               : _validateLabel = false;
 
-                          if (_validateLabel == false) {}
+                          if (_validateLabel == false) {
+                            _save();
+                            Navigator.of(context).pop(this.question);
+                          }
                         })
                       },
                       style: ButtonStyle(

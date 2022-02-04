@@ -30,7 +30,7 @@ class Question {
         field: json["field"] == null
             ? null
             : QuestionField.fromJson(json["field"]),
-        dateUpdated: json["dateUpdated"],
+        dateUpdated: json["dateUpdated"] == null ? null : "",
         dateCreated: Util.formattDate(json["dateCreated"]),
         userCreated: json["userCreated"],
       );
@@ -76,7 +76,7 @@ class QuestionField {
         required: json["required"] == null ? null : json["required"],
         value: json["value"],
         items: json["items"] == null
-            ? null
+            ? []
             : List<QuestionFieldItem>.from(
                 json["items"].map((x) => QuestionFieldItem.fromJson(x))),
       );
@@ -90,27 +90,31 @@ class QuestionField {
         "required": required == null ? false : required,
         "value": value,
         "items": items == null
-            ? null
+            ? []
             : List<dynamic>.from(items!.map((x) => x.toJson())),
       };
 }
 
 class QuestionFieldItem {
   QuestionFieldItem({
+    this.id,
     required this.label,
     required this.value,
   });
 
+  int? id;
   String label;
   dynamic value;
 
   factory QuestionFieldItem.fromJson(Map<String, dynamic> json) =>
       QuestionFieldItem(
-        label: json["label"],
-        value: json["value"],
+        id: json["id"],
+        label: json["label"] == null ? "" : json["label"],
+        value: json["value"] == null ? "" : json["value"],
       );
 
   Map<String, dynamic> toJson() => {
+        "id": id,
         "label": label,
         "value": value,
       };
