@@ -26,6 +26,10 @@ class Variables {
     return baseUrl() + 'formQuestion/list/';
   }
 
+  static String getQuestionListFilterUrl() {
+    return baseUrl() + 'formQuestion/filter/';
+  }
+
   //TEMPLATES FORM URLS
 
   static String getTemplateSaveUrl() {
@@ -34,5 +38,9 @@ class Variables {
 
   static String getTemplateListUrl() {
     return baseUrl() + 'formTemplate/list/';
+  }
+
+  static String getTemplateListFilterUrl() {
+    return baseUrl() + 'formTemplate/filter/';
   }
 }

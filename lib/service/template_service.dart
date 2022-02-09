@@ -26,21 +26,46 @@ class TemplateService {
     }
   }
 
-  // Future<Template> getTemplatesById(String id) async {
-  //   final response = await http.post(Uri.parse(Variables.getTemplateListUrl()
-  //       id +
-  //       "/" +
-  //       authKeyService.getAuthKey()));
+  Future<List<Template>> getTemplatesFilter(Template template) async {
+    final response = await http.post(
+        Uri.parse(
+            Variables.getTemplateListFilterUrl() + authKeyService.getAuthKey()),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(template));
 
-  //   if (response.statusCode == 200) {
-  //     // If the server did return a 200 OK response,
-  //     // then parse the JSON.
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
 
-  //     return Template.fromJson(jsonDecode(response.body));
-  //   } else {
-  //     // If the server did not return a 200 OK response,
-  //     // then throw an exception.
-  //     throw Exception('Failed to load the template');
-  //   }
-  // }
+      final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
+
+      return parsed.map<Template>((json) => Template.fromJson(json)).toList();
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load the templates');
+    }
+  }
+
+  Future<Template> save(Template template) async {
+    final response = await http.post(
+        Uri.parse(Variables.getTemplateSaveUrl() + authKeyService.getAuthKey()),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(template));
+
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+
+      return Template.fromJson(jsonDecode(response.body));
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load the template');
+    }
+  }
 }

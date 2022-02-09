@@ -25,14 +25,33 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
 
   String _departamentDropdownValue = "";
 
+  TextEditingController searchValueController = TextEditingController();
+
   ScrollController scrollController = ScrollController();
+
+  QuestionService api = QuestionService();
+
+  late Future<List<Question>> questionList = api.getQuestions();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void filter() {
+    Question question = Question(
+        name: searchValueController.text,
+        departament: _departamentDropdownValue,
+        field: QuestionField(key: "", type: "", label: ""));
+
+    questionList = api.getQuestionsFilter(question);
+
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
     Size _screen = MediaQuery.of(context).size;
-    QuestionService api = QuestionService();
-
-    Future<List<Question>> questionList = api.getQuestions();
 
     return FutureBuilder<List<Question>>(
         future: questionList,
@@ -47,13 +66,12 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
                 padding: EdgeInsets.all(defaultPadding),
                 decoration: BoxDecoration(color: Colors.white),
                 child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Header(),
-                      Header(),
                       Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Row(children: <Widget>[
@@ -127,6 +145,33 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
                             color: primaryColor,
                             fontWeight: FontWeight.bold),
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          ElevatedButton.icon(
+                            onPressed: () {
+                              Navigator.pushNamed(context, NEW_QUESTION_FORM,
+                                  arguments: Question(
+                                      field: QuestionField(
+                                          key: "",
+                                          type: "",
+                                          label: "",
+                                          items: []),
+                                      name: ""));
+                            },
+                            icon: Icon(Icons.add),
+                            label: Text("Add New"),
+                            style: TextButton.styleFrom(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: defaultPadding * 1.5,
+                                  vertical: defaultPadding /
+                                      (Responsive.isMobile(context) ? 2 : 1),
+                                ),
+                                backgroundColor: primaryColor),
+                          )
+                        ],
+                      ),
                       ProgressBar()
                     ]));
           }
@@ -147,33 +192,37 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
                             width: _screen.width / 6,
                             child: Center(
                                 child: TextField(
+                                    controller: searchValueController,
                                     decoration: InputDecoration(
-                              hintText: "Search",
-                              fillColor: primaryColor,
-                              filled: true,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(10)),
-                              ),
-                              suffixIcon: InkWell(
-                                onTap: () {},
-                                child: Container(
-                                  padding:
-                                      EdgeInsets.all(defaultPadding * 0.75),
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: defaultPadding / 2),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(10)),
-                                  ),
-                                  child: SvgPicture.asset(
-                                      "assets/icons/Search.svg",
-                                      color: primaryColor),
-                                ),
-                              ),
-                            )))),
+                                      hintText: "Search",
+                                      fillColor: primaryColor,
+                                      filled: true,
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide.none,
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(10)),
+                                      ),
+                                      suffixIcon: InkWell(
+                                        onTap: () {
+                                          filter();
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.all(
+                                              defaultPadding * 0.75),
+                                          margin: EdgeInsets.symmetric(
+                                              horizontal: defaultPadding / 2),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(10)),
+                                          ),
+                                          child: SvgPicture.asset(
+                                              "assets/icons/Search.svg",
+                                              color: primaryColor),
+                                        ),
+                                      ),
+                                    )))),
                         const SizedBox(
                           width: 20,
                         ),
@@ -197,6 +246,7 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
                           onChanged: (newValue) {
                             setState(() {
                               _departamentDropdownValue = newValue!;
+                              filter();
                             });
                           },
                           items: departamentTypeDropDownItemList,
@@ -247,25 +297,29 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
                         data: Theme.of(context)
                             .copyWith(dividerColor: Colors.green),
                         child: DataTable2(
+                          showCheckboxColumn: false,
+                          headingRowColor:
+                              MaterialStateProperty.all(primaryColor),
+                          headingTextStyle: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
                           dataRowHeight: 60,
                           columns: [
                             DataColumn(
                               label: Text(
                                 "Name",
-                                style: textStyle,
                               ),
                             ),
                             DataColumn(
-                              label: Text("Date", style: textStyle),
+                              label: Text("Date"),
                             ),
                             DataColumn(
-                              label: Text("Departament", style: textStyle),
+                              label: Text("Departament"),
                             ),
                           ],
                           rows: List.generate(
                             list.length,
                             (index) =>
-                                templatesDataRow(list[index], _screen, context),
+                                questionsDataRow(list[index], _screen, context),
                           ),
                         ),
                       ),
@@ -277,7 +331,7 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
   }
 }
 
-DataRow templatesDataRow(
+DataRow questionsDataRow(
     Question questionInfo, Size screenSize, BuildContext context) {
   return DataRow(
     onSelectChanged: (selected) {

@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import 'models/Question.dart';
+import 'models/Template.dart';
 import 'screens/form/components/questions_screen.dart';
 import 'screens/form/components/template_builder/new_template_form.dart';
 import 'screens/form/components/templates_screen.dart';
@@ -85,7 +86,10 @@ class MyApp extends StatelessWidget {
                     ),
                   ],
                   child: Container(
-                    child: MainScreen(widget: NewTemplateForm()),
+                    child: MainScreen(
+                        widget: NewTemplateForm(
+                            template: ModalRoute.of(context)!.settings.arguments
+                                as Template)),
                   ))
         });
   }

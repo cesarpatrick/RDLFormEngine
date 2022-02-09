@@ -1,4 +1,6 @@
 import 'package:admin/constants.dart';
+import 'package:admin/models/Question.dart';
+import 'package:admin/models/Template.dart';
 import 'package:admin/screens/main/components/header.dart';
 import 'package:admin/service/form_builder_service.dart';
 import 'package:admin/util.dart';
@@ -7,7 +9,8 @@ import 'package:flutter/material.dart';
 import 'template_form_builder.dart';
 
 class NewTemplateForm extends StatefulWidget {
-  const NewTemplateForm({Key? key}) : super(key: key);
+  final Template? template;
+  const NewTemplateForm({Key? key, this.template}) : super(key: key);
 
   @override
   _NewTemplateFormState createState() => _NewTemplateFormState();
@@ -30,10 +33,19 @@ class _NewTemplateFormState extends State<NewTemplateForm> {
 
   bool _validate = false;
 
+  List<Question> questions = [];
+
   @override
   void initState() {
     super.initState();
     initialValueSwitch = false;
+
+    if (widget.template!.id != null && widget.template!.id != 0) {
+      nameController.text = widget.template!.name;
+      _departamentDropdownValue = widget.template!.departament!;
+      name = widget.template!.name;
+      questions = widget.template!.questions;
+    }
   }
 
   @override
@@ -61,7 +73,7 @@ class _NewTemplateFormState extends State<NewTemplateForm> {
                           const Padding(
                             padding: EdgeInsets.all(15),
                             child: Text(
-                              "New Template",
+                              "New Form",
                               style: titleStyle,
                             ),
                           )
@@ -126,13 +138,16 @@ class _NewTemplateFormState extends State<NewTemplateForm> {
                                       )))
                             ]),
                         horizontalDivider,
-                        Theme(
-                            data: Theme.of(context).copyWith(
-                                unselectedWidgetColor: Colors.black,
-                                disabledColor: Colors.black),
-                            child: TemplateFormBuilder(
-                              name: name,
-                            ))
+                        if (name != "")
+                          Theme(
+                              data: Theme.of(context).copyWith(
+                                  unselectedWidgetColor: Colors.black,
+                                  disabledColor: Colors.black),
+                              child: TemplateFormBuilder(
+                                  name: name,
+                                  departament: _departamentDropdownValue,
+                                  questions: questions,
+                                  templateId: widget.template!.id))
                       ],
                     ))
               ],

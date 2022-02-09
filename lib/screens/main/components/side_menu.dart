@@ -14,12 +14,12 @@ class SideMenu extends StatelessWidget {
     UserService userService = UserService();
 
     return Drawer(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.white70,
       child: ListView(
         children: [
           DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Colors.grey[250],
               ),
               child: Column(children: [
                 Image.asset("assets/images/logo.png", width: 110, height: 110),
@@ -42,7 +42,7 @@ class SideMenu extends StatelessWidget {
                     ])
               ])),
           DrawerListTile(
-            title: "Templates",
+            title: "Forms",
             svgSrc: "assets/icons/menu_dashbord.svg",
             press: () {
               Navigator.pushNamed(context, HOME_ROUTE);
@@ -80,14 +80,14 @@ class SideMenu extends StatelessWidget {
           //   svgSrc: "assets/icons/menu_profile.svg",
           //   press: () {},
           // ),
-          DrawerListTile(
-            title: "Settings",
-            svgSrc: "assets/icons/menu_setting.svg",
-            press: () {},
-          ),
+          // DrawerListTile(
+          //   title: "Settings",
+          //   svgSrc: "assets/icons/menu_setting.svg",
+          //   press: () {},
+          // ),
           DrawerListTile(
             title: "Sign Out",
-            svgSrc: "assets/icons/menu_store.svg",
+            svgSrc: "assets/icons/exit_icon.svg",
             press: () {
               userService.setUser(Webuser());
               userService.updatePrefs("", "");
