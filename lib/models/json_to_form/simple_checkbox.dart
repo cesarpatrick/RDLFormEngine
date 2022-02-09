@@ -41,7 +41,7 @@ class _SimpleListCheckbox extends State<SimpleListCheckbox> {
     super.initState();
     item = widget.item;
     for (var i = 0; i < item['items'].length; i++) {
-      if (item['items'][i]['value'] == true) {
+      if (item['items'][i]['value'] == "true") {
         selectItems.add(i);
       }
     }
@@ -59,11 +59,11 @@ class _SimpleListCheckbox extends State<SimpleListCheckbox> {
           children: <Widget>[
             new Checkbox(
               activeColor: Colors.black,
-              value: item['items'][i]['value'],
+              value: item['items'][i]['value'] == "true" ? true : false,
               onChanged: (bool? value) {
                 this.setState(
                   () {
-                    item['items'][i]['value'] = value;
+                    item['items'][i]['value'] = value.toString();
                     if (value!) {
                       selectItems.add(i);
                     } else {

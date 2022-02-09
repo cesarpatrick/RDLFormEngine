@@ -182,6 +182,13 @@ class _CoreFormState extends State<JsonToForm> {
           formGeneral['fields'][position]['value'] = value;
           template.questions[position].field!.value = value;
           break;
+        case CHECKBOX_INPUT:
+          template.questions[position].field!.items![position - 1].value =
+              value;
+          break;
+        case RADIO_BUTTON_INPUT:
+          template.questions[position].field!.value = value;
+          break;
         default:
       }
 

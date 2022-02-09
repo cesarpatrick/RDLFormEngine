@@ -34,8 +34,8 @@ class Util {
     return list;
   }
 
-  static String formattDate(String date) {
-    if (date.isNotEmpty) {
+  static String formattDate(String? date) {
+    if (date != null && date.isNotEmpty && date.length > 10) {
       DateTime tempDate = new DateFormat("yyyy-MM-dd hh:mm:ss").parse(date);
 
       String finalDate = DateFormat("dd-MM-yyyy").format(tempDate);
