@@ -33,7 +33,7 @@ class Template {
             : List<Question>.from(
                 json["questions"].map((x) => Question.fromJson(x))),
         departament: json["departament"],
-        dateUpdated: json["dateUpdated"] == null ? null : "",
+        dateUpdated: json["dateUpdated"] == null ? null : null,
         dateCreated: Util.formattDate(json["dateCreated"]),
         userCreated: json["userCreated"] == null ? null : json["userCreated"],
       );

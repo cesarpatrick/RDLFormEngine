@@ -47,6 +47,14 @@ class _CoreFormState extends State<JsonToForm> {
 
   dynamic radioValue;
 
+  void removeItem(int index) {
+    Template template = Template.fromJson(formGeneral);
+    print(template.questions[index].field!.label);
+    template.questions.removeAt(index);
+    formGeneral = template.toJson();
+    this._handleChanged();
+  }
+
   List<Widget> jsonToForm() {
     List<Widget> listWidget = [];
     if (formGeneral['name'] != null) {
@@ -65,9 +73,6 @@ class _CoreFormState extends State<JsonToForm> {
         style: new TextStyle(fontSize: 14.0, fontStyle: FontStyle.italic),
       ));
     }
-
-    // for (var count = 0; count < formGeneral['fields'].length; count++) {
-    //   Map item = formGeneral['fields'][count];
 
     for (var count = 0; count < formGeneral['questions'].length; count++) {
       Map question = formGeneral['questions'][count];
@@ -111,6 +116,16 @@ class _CoreFormState extends State<JsonToForm> {
           validations: widget.validations,
           keyboardTypes: widget.keyboardTypes,
         ));
+
+        listWidget.add(Column(children: [
+          Divider(
+            thickness: 1.5, // thickness of the line
+            indent: 0, // empty space to the leading edge of divider.
+            endIndent: 0, // empty space to the trailing edge of the divider.
+            color: Colors.black54, // The color to use when painting the line.
+            height: 3, // The divider's height extent.
+          ),
+        ]));
       }
 
       if (item['type'] == "Checkbox") {
@@ -148,6 +163,19 @@ class _CoreFormState extends State<JsonToForm> {
           keyboardTypes: widget.keyboardTypes,
         ));
       }
+
+      listWidget.add(Column(children: [
+        Padding(
+            padding: EdgeInsets.all(15),
+            child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.redAccent, // Background color
+                ),
+                onPressed: () {
+                  removeItem(count);
+                },
+                child: Text("Remove")))
+      ]));
     }
 
     if (widget.buttonSave != null) {
@@ -167,7 +195,7 @@ class _CoreFormState extends State<JsonToForm> {
     return listWidget;
   }
 
-  _CoreFormState(this.formGeneral);
+  _CoreFormState(formGeneral);
 
   void _handleChanged() {
     widget.onChanged!(formGeneral);
@@ -189,6 +217,15 @@ class _CoreFormState extends State<JsonToForm> {
         case RADIO_BUTTON_INPUT:
           template.questions[position].field!.value = value;
           break;
+        case SELECT_INPUT:
+          template.questions[position].field!.value = value;
+          break;
+        case INPUT_TEXT:
+          template.questions[position].field!.value = value;
+          break;
+        case TEXT_AREA_INPUT:
+          template.questions[position].field!.value = value;
+          break;
         default:
       }
 
@@ -202,8 +239,7 @@ class _CoreFormState extends State<JsonToForm> {
   @override
   Widget build(BuildContext context) {
     formGeneral = json.decode(widget.form!);
-    // Template template = Template.fromJson(formGeneral);
-    // List<Question> q = template.questions;
+
     return Form(
       autovalidateMode:
           formGeneral['autoValidated'] ?? AutovalidateMode.disabled,

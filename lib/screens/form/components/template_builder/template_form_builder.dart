@@ -117,7 +117,7 @@ class _TemplateFormBuilderState extends State<TemplateFormBuilder> {
               options.add(Container(
                   width: _screen.width,
                   child: Padding(
-                      padding: EdgeInsets.all(3),
+                      padding: EdgeInsets.all(1.5),
                       child: ElevatedButton(
                         onPressed: () => {
                           setState(() {
@@ -252,17 +252,16 @@ class _TemplateFormBuilderState extends State<TemplateFormBuilder> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                        width: _screen.width / 4,
-                        height: _screen.height / 2,
-                        padding: const EdgeInsets.all(3.0),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: primaryColor, width: 3),
-                            color: Colors.white),
-                        child: Column(
-                          children: options,
-                        ),
-                      ),
-                      VerticalDivider(width: 2.0),
+                          width: _screen.width / 4,
+                          height: _screen.height / 2,
+                          padding: const EdgeInsets.all(3.0),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: primaryColor, width: 3),
+                              color: Colors.white),
+                          child: ListView(
+                              padding: const EdgeInsets.all(8),
+                              children: options)),
+                      VerticalDivider(width: 5.0),
                       Container(
                         width: _screen.width / 2,
                         height: _screen.height / 2,
@@ -282,7 +281,6 @@ class _TemplateFormBuilderState extends State<TemplateFormBuilder> {
                                   onChanged: (dynamic response) {
                                     setState(() {
                                       this.response = response;
-                                      print(response);
                                       questions =
                                           Template.fromJson(this.response)
                                               .questions;

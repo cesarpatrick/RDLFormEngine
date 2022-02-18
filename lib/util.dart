@@ -31,6 +31,7 @@ class Util {
     list.add(
         DropdownMenuItem<String>(value: OPERATIONS, child: Text(OPERATIONS)));
     list.add(DropdownMenuItem<String>(value: WORKSHOP, child: Text(WORKSHOP)));
+    list.add(DropdownMenuItem<String>(value: DEPOT, child: Text(DEPOT)));
     return list;
   }
 

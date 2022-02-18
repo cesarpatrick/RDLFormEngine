@@ -21,8 +21,8 @@ const blackTextStyleNoBold = TextStyle(color: Colors.black, fontSize: 14);
 
 const horizontalDivider = const Divider(
   thickness: 5, // thickness of the line
-  indent: 20, // empty space to the leading edge of divider.
-  endIndent: 20, // empty space to the trailing edge of the divider.
+  indent: 0, // empty space to the leading edge of divider.
+  endIndent: 0, // empty space to the trailing edge of the divider.
   color: primaryColor, // The color to use when painting the line.
   height: 20, // The divider's height extent.
 );
@@ -50,3 +50,4 @@ const String IT = "INFORMATION TECHNOLOGY";
 const String HR = "HUMAN RESOURCES";
 const String WORKSHOP = "WORKSHOP";
 const String OPERATIONS = "OPERATIONS";
+const String DEPOT = "DEPOT";
