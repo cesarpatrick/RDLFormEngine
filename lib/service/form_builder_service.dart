@@ -74,11 +74,12 @@ class FormBuilderService {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 20),
-              Text(question.field!.label,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold)),
+              Expanded(
+                  child: Text(question.field!.label,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold))),
               SizedBox(height: 10),
               TextField(
                   style: TextStyle(color: Colors.black),
@@ -132,7 +133,8 @@ class FormBuilderService {
                       const SizedBox(
                         width: 20,
                       ),
-                      Text(question.field!.label, style: textStyle),
+                      Expanded(
+                          child: Text(question.field!.label, style: textStyle)),
                       const SizedBox(
                         width: 20,
                       ),
@@ -171,11 +173,12 @@ class FormBuilderService {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: 20),
-              Text(question.field!.label,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold)),
+              Expanded(
+                  child: Text(question.field!.label,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold))),
               SizedBox(width: 10),
               Switch(
                 activeColor: Colors.green,
@@ -200,7 +203,7 @@ class FormBuilderService {
                 value: item.value,
                 groupValue: selectedValue,
                 onChanged: (dynamic value) {}),
-            Text(item.label, style: blackTextStyleNoBold),
+            Expanded(child: Text(item.label, style: blackTextStyleNoBold)),
           ],
         ));
       }
@@ -237,11 +240,12 @@ class FormBuilderService {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(question.field!.label,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold)),
+              Expanded(
+                  child: Text(question.field!.label,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold))),
               SizedBox(height: 10),
               Column(
                 children: [
@@ -313,7 +317,7 @@ class FormBuilderService {
                 activeColor: Colors.black,
                 value: boolValue,
                 onChanged: (dynamic value) {}),
-            Text(item.label, style: blackTextStyleNoBold),
+            Expanded(child: Text(item.label, style: blackTextStyleNoBold)),
           ],
         ));
       }
