@@ -284,46 +284,43 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
                                 (Responsive.isMobile(context) ? 2 : 1),
                           ),
                           backgroundColor: primaryColor),
-                    )
+                    ),
                   ],
                 ),
+                SizedBox(height: 20),
                 SizedBox(
-                    width: double.infinity,
-                    height: _screen.height / 1.4,
-                    child: SingleChildScrollView(
-                      controller: scrollController,
-                      padding: EdgeInsets.all(defaultPadding),
-                      child: Theme(
-                        data: Theme.of(context)
-                            .copyWith(dividerColor: Colors.green),
-                        child: DataTable2(
-                          showCheckboxColumn: false,
-                          headingRowColor:
-                              MaterialStateProperty.all(primaryColor),
-                          headingTextStyle: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
-                          dataRowHeight: 60,
-                          columns: [
-                            DataColumn(
-                              label: Text(
-                                "Name",
-                              ),
-                            ),
-                            DataColumn(
-                              label: Text("Date"),
-                            ),
-                            DataColumn(
-                              label: Text("Departament"),
-                            ),
-                          ],
-                          rows: List.generate(
-                            list.length,
-                            (index) =>
-                                questionsDataRow(list[index], _screen, context),
+                  width: double.infinity,
+                  height: _screen.height / 1.4,
+                  child: Theme(
+                    data:
+                        Theme.of(context).copyWith(dividerColor: Colors.green),
+                    child: DataTable2(
+                      showCheckboxColumn: false,
+                      headingRowColor: MaterialStateProperty.all(primaryColor),
+                      headingTextStyle: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                      dataRowHeight: 60,
+                      columns: [
+                        DataColumn(
+                          label: Text(
+                            "Name",
                           ),
                         ),
+                        DataColumn(
+                          label: Text("Date"),
+                        ),
+                        DataColumn(
+                          label: Text("Departament"),
+                        ),
+                      ],
+                      rows: List.generate(
+                        list.length,
+                        (index) =>
+                            questionsDataRow(list[index], _screen, context),
                       ),
-                    ))
+                    ),
+                  ),
+                )
               ],
             ),
           );

@@ -296,44 +296,41 @@ class _TemplatesScreenState extends State<TemplatesScreen> {
                     )
                   ],
                 ),
+                SizedBox(height: 20),
                 SizedBox(
-                    width: double.infinity,
-                    height: _screen.height / 1.4,
-                    child: SingleChildScrollView(
-                      controller: scrollController,
-                      padding: EdgeInsets.all(defaultPadding),
-                      child: Theme(
-                        data: Theme.of(context)
-                            .copyWith(dividerColor: Colors.green),
-                        child: DataTable2(
-                          showCheckboxColumn: false,
-                          columnSpacing: defaultPadding,
-                          dataRowHeight: 60,
-                          headingRowColor:
-                              MaterialStateProperty.all(primaryColor),
-                          headingTextStyle: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
-                          columns: [
-                            DataColumn(
-                              label: Text(
-                                "Name",
-                              ),
-                            ),
-                            DataColumn(
-                              label: Text("Date"),
-                            ),
-                            DataColumn(
-                              label: Text("Departament"),
-                            ),
-                          ],
-                          rows: List.generate(
-                            list.length,
-                            (index) =>
-                                templatesDataRow(list[index], _screen, context),
+                  width: double.infinity,
+                  height: _screen.height / 1.4,
+                  child: Theme(
+                    data:
+                        Theme.of(context).copyWith(dividerColor: Colors.green),
+                    child: DataTable2(
+                      showCheckboxColumn: false,
+                      columnSpacing: defaultPadding,
+                      dataRowHeight: 60,
+                      headingRowColor: MaterialStateProperty.all(primaryColor),
+                      headingTextStyle: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                      columns: [
+                        DataColumn(
+                          label: Text(
+                            "Name",
                           ),
                         ),
+                        DataColumn(
+                          label: Text("Date"),
+                        ),
+                        DataColumn(
+                          label: Text("Departament"),
+                        ),
+                      ],
+                      rows: List.generate(
+                        list.length,
+                        (index) =>
+                            templatesDataRow(list[index], _screen, context),
                       ),
-                    ))
+                    ),
+                  ),
+                )
               ],
             ),
           );
