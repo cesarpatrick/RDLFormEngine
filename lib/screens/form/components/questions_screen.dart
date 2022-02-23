@@ -192,6 +192,9 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
                             width: _screen.width / 6,
                             child: Center(
                                 child: TextField(
+                                    onChanged: (value) {
+                                      filter();
+                                    },
                                     controller: searchValueController,
                                     decoration: InputDecoration(
                                       hintText: "Search",
