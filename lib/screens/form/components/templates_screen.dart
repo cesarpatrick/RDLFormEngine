@@ -353,7 +353,7 @@ class _TemplatesScreenState extends State<TemplatesScreen> {
           child: Row(children: [
             if (Responsive.isDesktop(context))
               SvgPicture.asset(
-                "assets/icons/xd_file.svg",
+                "assets/icons/pdf_file.svg",
                 height: 30,
                 width: 30,
               ),
