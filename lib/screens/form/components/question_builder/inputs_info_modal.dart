@@ -73,6 +73,54 @@ class _InputsInfoModalState extends State<InputsInfoModal> {
                               ),
                             ),
                             const Text(
+                              'This is a Date input',
+                              style: TextStyle(fontSize: 14),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(15),
+                              child: new Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  new Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      InkWell(
+                                          // onTap: () {
+                                          //   selectDate();
+                                          // },
+                                          child: new TextFormField(
+                                        initialValue: "12-05-2022",
+                                        style: TextStyle(color: Colors.white),
+                                        readOnly: true,
+                                        cursorColor: Colors.white,
+                                        decoration: InputDecoration(
+                                          fillColor: Colors.white,
+                                          focusColor: Colors.white,
+                                          hoverColor: Colors.white,
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Colors.white,
+                                              width: 2.0,
+                                            ),
+                                          ),
+                                          border: OutlineInputBorder(),
+                                          hintText: "DD-MM-YYYY",
+                                          iconColor: Colors.white,
+                                          //prefixIcon: Icon(Icons.date_range_rounded),
+                                          suffixIcon: IconButton(
+                                            onPressed: () {},
+                                            icon: Icon(
+                                                Icons.calendar_today_rounded),
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      )),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                            const Text(
                               'This is a Text Area input',
                               style: TextStyle(fontSize: 14),
                             ),

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:admin/models/Question.dart';
 import 'package:admin/screens/form/components/question_builder/checkbox_input_form.dart';
+import 'package:admin/screens/form/components/question_builder/input_date_form.dart';
 import 'package:admin/screens/form/components/question_builder/input_text_form.dart';
 import 'package:admin/screens/form/components/question_builder/radio_button_form.dart';
 import 'package:admin/screens/form/components/question_builder/select_input_form.dart';
@@ -39,6 +40,9 @@ class FormBuilderService {
       case SELECT_INPUT:
         return SelectInputForm(
             name: name, departament: departament, question: question);
+      case INPUT_DATE:
+        return InputDateForm(
+            name: name, departament: departament, question: question);
       default:
         return Container();
     }
@@ -58,6 +62,8 @@ class FormBuilderService {
         return radioButtonInputPreview(question);
       case SELECT_INPUT:
         return inputSelectPreview(question);
+      case INPUT_DATE:
+        return inputDatePreview(question);
       default:
         return Container();
     }
@@ -342,6 +348,57 @@ class FormBuilderService {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [Text(question.field!.label, style: blackTextStyle)]);
     }
+  }
+
+  Widget inputDatePreview(Question question) {
+    TextEditingController labelController = TextEditingController();
+    labelController.text = question.field!.value;
+
+    return new Container(
+      child: new Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          new Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(question.field!.label, style: blackTextStyle),
+              InkWell(
+                  // onTap: () {
+                  //   selectDate();
+                  // },
+                  child: new TextFormField(
+                initialValue: "12-05-2022",
+                style: TextStyle(color: Colors.black),
+                readOnly: true,
+                cursorColor: Colors.black,
+                decoration: InputDecoration(
+                  fillColor: Colors.black,
+                  focusColor: Colors.black,
+                  hoverColor: Colors.black,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.black,
+                      width: 2.0,
+                    ),
+                  ),
+                  border: OutlineInputBorder(),
+                  hintText: "DD-MM-YYYY",
+                  iconColor: Colors.black,
+                  //prefixIcon: Icon(Icons.date_range_rounded),
+                  suffixIcon: IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.calendar_today_rounded),
+                    color: Colors.black,
+                  ),
+                ),
+              )),
+            ],
+          )
+        ],
+      ),
+    );
   }
 
   String convertQuestionToJson(Question question) {

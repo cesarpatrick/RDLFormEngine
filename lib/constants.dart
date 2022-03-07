@@ -44,6 +44,7 @@ const String CHECKBOX_INPUT = "Checkbox";
 const String SELECT_INPUT = "Select";
 const String TEXT_AREA_INPUT = "TextArea";
 const String RADIO_BUTTON_INPUT = "RadioButton";
+const String INPUT_DATE = "Date";
 
 //DEPARTAMENTS
 const String IT = "INFORMATION TECHNOLOGY";

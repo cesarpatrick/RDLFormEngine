@@ -9,6 +9,8 @@ class Util {
     list.add(DropdownMenuItem<String>(value: "", child: Text("")));
     list.add(
         DropdownMenuItem<String>(value: INPUT_TEXT, child: Text(INPUT_TEXT)));
+    list.add(
+        DropdownMenuItem<String>(value: INPUT_DATE, child: Text(INPUT_DATE)));
     list.add(DropdownMenuItem<String>(value: SWITCH, child: Text(SWITCH)));
     list.add(DropdownMenuItem<String>(
         value: CHECKBOX_INPUT, child: Text(CHECKBOX_INPUT)));
