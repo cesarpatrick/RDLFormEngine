@@ -184,6 +184,9 @@ class _TemplateFormBuilderState extends State<TemplateFormBuilder> {
                             flex: 4,
                             child: Center(
                                 child: TextField(
+                                    onChanged: (value) {
+                                      filter();
+                                    },
                                     controller: searchValueController,
                                     decoration: InputDecoration(
                                       hintText: "Search",
@@ -285,6 +288,7 @@ class _TemplateFormBuilderState extends State<TemplateFormBuilder> {
                                           Template.fromJson(this.response)
                                               .questions;
                                       form = Template(
+                                          id: widget.templateId,
                                           name: widget.name!,
                                           questions: questions);
                                     });
