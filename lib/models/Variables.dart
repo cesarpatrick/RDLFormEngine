@@ -4,7 +4,7 @@ class Variables {
   }
 
   static String beta() {
-    return 'http://localhost:8880/RDLWebService/ws/';
+    return 'http://beta.rdltr.com/formmanagerws/ws';
   }
 
   static String baseUrl() {

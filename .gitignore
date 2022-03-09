@@ -34,3 +34,5 @@ build/
 .dart_tool/package_config_subset
 .dart_tool/package_config.json
 .dart_tool/chrome-device/
+.flutter-plugins-dependencies
+/.dart_tool/
